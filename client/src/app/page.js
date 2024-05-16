@@ -9,6 +9,7 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@ne
 import { FaCircleArrowDown } from "react-icons/fa6";
 import {Input} from "@nextui-org/react";
 import {DatePicker} from "@nextui-org/react";
+import Bottom from '@/component/about/page';
 
 
 
@@ -25,7 +26,7 @@ const Home = () => {
 
   return (
       
-    <div className='bg-white'>
+    <div >
       <div className='m-4 flex'>
       <div className='w-20'>
       <Link href="/">
@@ -114,6 +115,45 @@ const Home = () => {
 
       </div>
 
+        <div className='flex m-4 items-center justify-center'>
+          <div className='m-4'><h4>Your pick of rides at low prices</h4>
+           <p className='text-gray-600 text-xs'>No matter where you’re going, by bus or<br/> 
+           carpool, find the perfect ride from our wide<br/> 
+           range of destinations and routes at low <br/>prices.</p>
+           </div>
+           <div className='ml-4 mr-4 mt-4'><h4>Trust who you travel with</h4>
+           <p className='text-gray-600 text-xs'>We take the time to get to know each of our<br/> 
+           members and bus partners. We check<br/> 
+           reviews, profiles and IDs, so you know who <br/>you’re travelling with and can book your
+           <br/>ride at ease on our secure platform.</p>
+           </div>
+           <div className='m-4'><h4>Scroll, click, tap and go!</h4>
+           <p className='text-gray-600 text-xs'>Booking a ride has never been easier!<br/> 
+           Thanks to our simple app powered by great<br/> 
+           technology, you can book a ride close to<br/>you in just minutes.</p>
+           </div>
+        </div>
+    
+    <div className='bg-blue-600 flex items-center justify-center mb-4'>
+    <div className='m-2 flex items-center justify-center '>
+    <Image  className=' p-4 '
+       width={400}
+       
+      alt="Pick A Ride"
+      src="/carshare.jpg"
+    />
+    </div>
+    <div>
+    <div className='m-4'><h1>Your safety is our priority</h1>
+           <p className='text-white text-sm'>At BlaBlaCar, we're working hard to make our platform as secure as it<br/> 
+           can be. But when scams do happen, we want you to know exactly how<br/> 
+           to avoid and report them. Follow our tips to help us keep you safe.<br/></p>
+           </div>
+    </div>
+    </div>
+    
+    <Bottom/>
+          
     </div>
     
   )

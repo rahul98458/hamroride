@@ -1,9 +1,13 @@
+import SearchRide from '@/component/search/page'
+
 import React from 'react'
 
-const searchpage = () => {
+const page = () => {
   return (
-    <div>search page</div>
+    <div>
+      <SearchRide/>
+    </div>
   )
 }
 
-export default searchpage
+export default page
