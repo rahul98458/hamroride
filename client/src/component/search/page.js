@@ -66,13 +66,14 @@ const SearchRide = () => {
       </div>
 
     </div>
+    <br/><br/><br/>
           
-         <div className='text-blue-500 text-5xl m-4 grid h-16 place-items-center'>
-          Find A Ride
+         <div className='text-blue-600 text-5xl text-center'>
+          Find a Ride
          </div>
-
+         <br/><br/>
         
-      <div >
+      <div className='flex justify-center  items-center' >
 
 <div className="flex w-full gap-4">
 <div className='m-4'>  <Input type="text" label="Leaving From"  isRequired/></div>
