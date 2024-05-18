@@ -13,8 +13,9 @@ const register = () => {
     <div className='text-5xl flex flex-col justify-center items-left bg-gray-100 rounded-3xl shadow-2xl p-20 m-5 space-y-7  '>
     How do you want to sign up?
     <br/> <br/>
-    <div className=' text-3xl text-blue-600 underline space-y-8 '>
+    <div className=' text-3xl text-blue-600 underline space-y-8'>
       <Link href='/register-email'>
+
 <div className='flex space-x-4 hover:bg-blue-600 hover:text-white p-6 shadow-2xl rounded-3xl '>
 <div><h1> Sign Up using Email </h1> </div>
 <div><MdOutlineEmail /></div>

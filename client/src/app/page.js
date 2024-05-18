@@ -84,7 +84,7 @@ const Home = () => {
     <Image  className=' p-4 '
        width={400}
        
-      alt="Pick A Ride"
+      alt="car Share"
       src="/carshare.jpg"
     />
     </div>
@@ -96,9 +96,29 @@ const Home = () => {
            </div>
     </div>
     </div>
-    
+
+    <div className='flex m-4 items-center justify-center'>
+          <div className='m-4'><h4>Drive when you want, make what you need</h4>
+           <p className='text-gray-600 text-xs'>Make money on your schedule with deliveries or rides—or<br/> 
+           both. You can use your own car or choose a rental<br/> 
+           through Hamro Ride. <br/></p>
+           </div>
+           <div className='ml-4 mr-4 mt-4'><h4>Trust who you travel with</h4>
+           <p className='text-gray-600 text-xs'>We take the time to get to know each of our<br/> 
+           members and bus partners. We check<br/> 
+           reviews, profiles and IDs, so you know who <br/>you’re travelling with and can book your
+           <br/>ride at ease on our secure platform.</p>
+           </div>
+           <div className='m-4'><h4>Scroll, click, tap and go!</h4>
+           <p className='text-gray-600 text-xs'>Booking a ride has never been easier!<br/> 
+           Thanks to our simple app powered by great<br/> 
+           technology, you can book a ride close to<br/>you in just minutes.</p>
+           </div>
+        </div>
+
+       <div className='bg-gray-600 '>
     <Bottom/>
-          
+    </div>
     </div>
     
   )

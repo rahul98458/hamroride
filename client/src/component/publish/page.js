@@ -14,7 +14,7 @@ import { FaSearch } from 'react-icons/fa';
 
 
 
-const SearchRide = () => {
+const PublishRide = () => {
 
   let [passenger, setPassenger] = useState(1);
 
@@ -33,12 +33,12 @@ const SearchRide = () => {
     <div className='flex p-2 space-x-4'> 
     
     
-      <Link href="/publishride">
+    <Link href="/searchride">
     <div className='text-blue-600 flex'>
-      <div className=' mr-1 mt-1 ml-2 '>
-        <CgAdd className='text-xl' />
+      <div className='mr-1 mt-1'>
+        <FaSearch className='text-xl' />
         </div>
-      <div className=''>Publish A Ride
+      <div className='mr-1'>Search Ride
       </div>
       </div>
       </Link>
@@ -51,7 +51,7 @@ const SearchRide = () => {
       <DropdownTrigger>
         <Button className='text-blue-600 '>
          <div className='flex '>
-        <div>  <FaCircleUser/></div>
+        <div>  <FaCircleUser className='text-4xl'/></div>
          <div > <FaCircleArrowDown/></div>
           </div>
         </Button>
@@ -74,7 +74,7 @@ const SearchRide = () => {
          
          
          <div className='text-blue-600 text-center'>
-          Find a Ride
+          Publish a Ride
          </div>
          <br/><br/>
         
@@ -100,7 +100,7 @@ Passenger
 
 
 
-<Button color="primary" className='mt-6 mr-4 h-12'>Search</Button>
+<Button color="primary" className='mt-6 mr-4 h-12'>Publish</Button>
 </div>
 
 </div>
@@ -109,4 +109,4 @@ Passenger
   )
 }
 
-export default SearchRide
+export default PublishRide

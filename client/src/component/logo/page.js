@@ -6,7 +6,7 @@ import Image from 'next/image';
 const HamroRideLogo = () => {
   return (
     <div>
-         <div className='w-20'>
+         <div className='w-20 '>
       <Link href="/">
        <Image 
        height={100}
