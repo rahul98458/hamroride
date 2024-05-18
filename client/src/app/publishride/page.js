@@ -1,8 +1,11 @@
+import PublishRide from '@/component/publish/page'
 import React from 'react'
 
 const publishride = () => {
   return (
-    <div>publish ride</div>
+    <div>
+      <PublishRide/>
+    </div>
   )
 }
 
