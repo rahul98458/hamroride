@@ -12,7 +12,8 @@ import Image from 'next/image';
 
 const CustumNavbar = () => {
   return (
- <div className='m-4 flex'>
+     <div className=' flex items-center justify-between m-4'>
+     <div >
       <div className='w-20'>
       <Link href="/">
        <Image 
@@ -21,35 +22,38 @@ const CustumNavbar = () => {
       alt="Logo"
       src="/logo.png"
     /></Link></div>
-    
+    </div>
+    <div className='flex'>
+    <div className='flex p-4 space-x-4'> 
     <Link href="/searchride">
-    <div className='text-blue-600 absolute top-5 right-60 h-8 w-8 flex mr-9'>
-      <div className='top-8 m-2'>
+    <div className='text-blue-600 flex'>
+      <div className='m-2'>
         <FaSearch className='text-xl' />
         </div>
-      <div className=''>Search Ride
+      <div>Search Ride
       </div>
       </div>
       </Link>
     
       <Link href="/publishride">
-    <div className='text-blue-600 absolute top-5 right-40 h-8 w-8 flex mr-7'>
-      <div className='top-8 m-2 right-8'>
+    <div className='text-blue-600 flex'>
+      <div className=' m-2 '>
         <CgAdd className='text-xl' />
         </div>
       <div className=''>Publish A Ride
       </div>
       </div>
       </Link>
-    
-      <div className='text-blue-600 absolute top-3 right-11 h-8 w-8 flex'>
+      </div>
+      <div>
+      <div className='text-blue-600'>
          
-      <Dropdown className='relative top-2'>
+      <Dropdown>
       <DropdownTrigger>
-        <Button className='text-blue-600 absolute top-2  right-0 bg-slate-200'>
+        <Button className='text-blue-600 '>
          <div className='flex'>
           <FaCircleUser className='text-4xl'/>
-          <FaCircleArrowDown className='absolute top-4 right-1'/>
+          <FaCircleArrowDown/>
           </div>
         </Button>
       </DropdownTrigger>
@@ -61,7 +65,8 @@ const CustumNavbar = () => {
     </Dropdown>
       
       </div>
-
+      </div>
+    </div>
     </div>
   )
 }

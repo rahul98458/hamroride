@@ -1,8 +1,11 @@
+import CustumNavbar from '@/component/navbar/page'
 import React from 'react'
 
 const register = () => {
   return (
-    <div>register</div>
+    <div>
+      <CustumNavbar/>
+    </div>
   )
 }
 
