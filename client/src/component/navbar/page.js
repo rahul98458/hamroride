@@ -1,12 +1,13 @@
 'use client'
 import React from 'react'
-import Link from 'next/link';
 import { FaSearch } from "react-icons/fa";
 import { CgAdd } from "react-icons/cg";
 import { FaCircleUser } from "react-icons/fa6";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import { FaCircleArrowDown } from "react-icons/fa6";
-import Image from 'next/image';
+import HamroRideLogo from '../logo/page';
+import Link from 'next/link';
+
 
 
 
@@ -14,14 +15,7 @@ const CustumNavbar = () => {
   return (
      <div className=' flex items-center justify-between m-4'>
      <div >
-      <div className='w-20'>
-      <Link href="/">
-       <Image 
-       height={100}
-      width={80}
-      alt="Logo"
-      src="/logo.png"
-    /></Link></div>
+     <HamroRideLogo/>
     </div>
     <div className='flex'>
     <div className='flex p-4 space-x-4'> 
