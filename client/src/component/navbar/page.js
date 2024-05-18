@@ -46,9 +46,9 @@ const CustumNavbar = () => {
       <Dropdown>
       <DropdownTrigger>
         <Button className='text-blue-600 '>
-         <div className='flex '>
-        <div>  <FaCircleUser className='text-4xl mr-1'/></div>
-         <div className='flex items-center justify-center h-9'> <FaCircleArrowDown/></div>
+         <div className='flex'>
+        <div >  <FaCircleUser /></div>
+         <div> <FaCircleArrowDown/></div>
           </div>
         </Button>
       </DropdownTrigger>
