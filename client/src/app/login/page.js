@@ -15,8 +15,8 @@ const login = () => {
       <h1>Login to Hamro Ride</h1>
       </div>
       <br/>
-      <Input type="email" variant="bordered" label="Email"  /><br/>
-      <Input type="password" label="Password"  variant="bordered"/>
+     <div className='w-[100%] border-2 rounded-2xl border-black'> <Input type="email" variant="bordered" label="Email"  /></div><br/>
+     <div className=' w-[100%] border-2 rounded-2xl border-black'> <Input type="password" label="Password"  variant="bordered"/></div>
     <br/><br/>
      <div className='text-blue-600 text-center '>
       <Button radius="full" className="bg-blue-600 text-white shadow-lg">

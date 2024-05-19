@@ -13,9 +13,9 @@ const registerEmail = () => {
     What's your email?
     <br/> <br/>
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-     <div className='w-[100%]'> <Input type="email" label="Email" variant="bordered" /></div>
+     <div className='w-[100%] border-2 rounded-2xl border-black'> <Input type="email" label="Email" variant="bordered" /></div>
     </div>
-    <Button color="primary">Continue</Button>
+   <Link href='/otpverify'><Button color="primary">Continue</Button></Link> 
     </div></div></div>
   )
 }

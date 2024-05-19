@@ -13,9 +13,9 @@ const registerWhatsapp = () => {
     What's your what's app Number?
     <br/> <br/>
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-     <div className='w-[100%]'> <Input type="tel" label="What's app Number" variant="bordered" /></div>
+     <div className='w-[100%] border-2 rounded-2xl border-black'> <Input type="tel" label="What's app Number" variant="bordered" /></div>
     </div>
-    <Button color="primary">Continue</Button>
+   <div className='text-center'><Link href='/otpverify'><Button color="primary">Continue</Button></Link></div>
     </div></div></div>
   )
 }
