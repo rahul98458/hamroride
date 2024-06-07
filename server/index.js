@@ -20,8 +20,6 @@ const userSchema = new Schema({
   address: String,
   phone:String,
   email:String,
-  licenseNum:String,
-  vehicleNum:String,
   password : String,
   gender : {
     type: String,
