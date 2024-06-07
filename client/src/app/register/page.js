@@ -5,18 +5,13 @@ import Link from 'next/link';
 import {Button, Input, dropdown} from "@nextui-org/react";
 import { useFormik } from 'formik';
 import {RadioGroup, Radio} from "@nextui-org/react";
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
+
 
 
 
 const registerEmail = () => {
 
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Registered As a"]));
-
-  const selectedValue = React.useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys]
-  );
+ 
 
   const formik = useFormik({
     initialValues: {
@@ -27,7 +22,7 @@ const registerEmail = () => {
       password:'',
       phone:'',
       gender: '',
-      dropdown:'',
+      registeras:'',
     },
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
@@ -134,26 +129,15 @@ const registerEmail = () => {
        </div>
 
        <div  className='w-[100%] flex justify-center items-center mt-2'>
-       <Dropdown>
-      <DropdownTrigger>
-        <Button 
-          variant="bordered" 
-          className="capitalize">
-          {selectedValue}
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu 
-        aria-label="Single selection example"
-        variant="flat"
-        disallowEmptySelection
-        selectionMode="single"
-        selectedKeys={selectedKeys}
-        onSelectionChange={setSelectedKeys}>
-        <DropdownItem key="rider">Rider</DropdownItem>
-        <DropdownItem key="passenger">Passenger</DropdownItem>
-       
-      </DropdownMenu>
-    </Dropdown>
+       <div className='text-base mt-1'>
+       <label for="cars">Registered As a:</label>
+
+        <select id="registeras"  onChange={formik.handleChange}
+         value={formik.values.registeras} >
+            <option  name="registeras" value="rider">Rider</option>
+            <option  name="registeras" value="passenger">Passenger</option>
+        </select>
+       </div>
        </div>
     
     </div>
