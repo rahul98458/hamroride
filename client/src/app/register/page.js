@@ -9,7 +9,7 @@ import {RadioGroup, Radio} from "@nextui-org/react";
 
 
 
-const registerEmail = () => {
+const Register = () => {
 
  
 
@@ -25,15 +25,20 @@ const registerEmail = () => {
       registeras:'',
     },
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      registerUser(values)
     },
   });
+
+    const registerUser =(values)=>{
+      fetch('http://localhost:4000/register')
+    }
+
   return (
     <form onSubmit={formik.handleSubmit}>
     <div>
          <div className='m-4 p-4 '><HamroRideLogo/></div>
          <div className='flex justify-center items-center '>
-    <div className='text-5xl flex flex-col justify-center items-center bg-blue-400 rounded-3xl shadow-2xl pt-5 m-1 space-y-7 w-80  '>
+    <div className='text-3xl flex flex-col justify-center items-center bg-blue-400 rounded-3xl shadow-2xl pt-3 pb-3   w-80  '>
     Sign Up
     <br/> <br/>
     <div >
@@ -91,7 +96,7 @@ const registerEmail = () => {
        />
        </div>
 
-       <div className='w-[100%] text-base'>
+       <div className='w-[100%] text-base mt-3 mb-3'>
        
        <label>
           Gender:
@@ -128,8 +133,8 @@ const registerEmail = () => {
         </label>
        </div>
 
-       <div  className='w-[100%] flex justify-center items-center mt-2'>
-       <div className='text-base mt-1'>
+       <div  className='w-[100%] flex justify-center items-center mb-3 '>
+       <div className='text-base'>
        <label for="cars">Registered As a:</label>
 
         <select id="registeras"  onChange={formik.handleChange}
@@ -141,10 +146,11 @@ const registerEmail = () => {
        </div>
     
     </div>
+    <p className='text-sm mb-2'>Already Have a Account?<br/><Link href="/login" className='flex justify-center items-center'>Click Here</Link></p>
     <Button type="submit" color="primary">Sign Up</Button>
     </div></div></div>
     </form>
   )
 }
 
-export default registerEmail;
+export default Register;
