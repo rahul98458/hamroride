@@ -1,6 +1,9 @@
 
 const express = require('express')
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 const dbConnect = require('./src/db/connection')
 const app = express()
@@ -19,6 +22,7 @@ const userSchema = new Schema({
   email:String,
   licenseNum:String,
   vehicleNum:String,
+  password : String,
   gender : {
     type: String,
     enum : ['male','female','other'],
@@ -34,11 +38,47 @@ role: {
 
 const User = mongoose.model('User', userSchema);
 
-app.post('/register', (req, res) => {
+app.post('/register', async(req, res) => {
+  const passwordHash=await bcrypt.hash(req.body.password,saltRounds)
+  req.body.password =passwordHash
+  const phoneExist =await User.exists({phone:req.body.phone})
+  const emailExist =await User.exists({email:req.body.email})
+  if(phoneExist)
+    {
+    return  res.json({msg:"phone already taken"})
+    }
+    else if(emailExist)
+    {
+      return  res.json({msg:"email id already taken"})
+    }
+    else
+    {
+      await User.create(req.body)
+      return res.json({msg:"user registered"})
+    }
+})
 
-  console.log(req.body)
-  res.send("ok")
-  User.create(req.body)
+app.post('/login', async(req, res) => {
+  const user = await User.findOne({phone:req.body.phone})
+  if(user)
+    {
+     const passwordMatch=await bcrypt.compare(req.body.password,user.password);
+     if(passwordMatch)
+      {
+        const token = jwt.sign({ phone:req.body.phone }, process.env.SECRET_KEY);
+         res.json({msg:"password match",token})
+      }
+      else
+      {
+        res.json({msg:"password doesnot match"})
+      }
+    }
+    else
+    {
+      return res.json({msg:"user not registered"})
+    }
+
+// res.json({msg:"send"})
 })
 
 app.get('/users', async(req, res) => {
