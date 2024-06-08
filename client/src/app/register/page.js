@@ -3,15 +3,29 @@ import React from 'react'
 import HamroRideLogo from '@/component/logo/page'
 import Link from 'next/link';
 import {Button, Input, dropdown} from "@nextui-org/react";
-import { useFormik } from 'formik';
+import { useFormik,ErrorMessage} from 'formik';
 import {RadioGroup, Radio} from "@nextui-org/react";
+import * as Yup from "yup";
 
-
-
+const validationSchema = Yup.object().shape({
+  firstName: Yup.string()
+      .required('First Name is required'),
+  lastName: Yup.string()
+      .required('Last Name is required'),
+  address: Yup.string()
+      .required('Address is required'),    
+  email: Yup.string()
+      .email('Invalid email format')
+      .required('Email is required'),
+  password: Yup.string()
+      .min(8, 'Password must be at least 8 characters long')
+      .required('Password is required'),
+  phone: Yup.string()
+      .matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits')
+      .required('Phone number is required'),    
+});
 
 const Register = () => {
-
- 
 
   const formik = useFormik({
     initialValues: {
@@ -24,6 +38,7 @@ const Register = () => {
       gender: '',
       registeras:'',
     },
+    validationSchema:validationSchema,
     onSubmit: values => {
       registerUser(values)
     },
@@ -39,10 +54,11 @@ const Register = () => {
     }
 
   return (
+ 
     <form onSubmit={formik.handleSubmit}>
     <div>
          <div className='m-4 p-4 '><HamroRideLogo/></div>
-         <div className='flex justify-center items-center '>
+         <div className='flex justify-center items-center  '>
     <div className='text-3xl flex flex-col justify-center items-center bg-blue-400 rounded-3xl shadow-2xl pt-3 pb-3   w-80  '>
     Sign Up
     <br/> <br/>
@@ -52,9 +68,11 @@ const Register = () => {
         id="firstName"
         name="firstName"
         onChange={formik.handleChange}
-        value={formik.values.firstName}
-          
+        value={formik.values.firstName}  
       />
+       {formik.touched.firstName && formik.errors.firstName ? (
+        <div className="text-black text-sm">{formik.errors.firstName}</div>
+        ) : null}
       </div>
 
     <div className='w-[100%] mb-1'> 
@@ -63,8 +81,10 @@ const Register = () => {
         name="lastName"
         onChange={formik.handleChange}
         value={formik.values.lastName}
-        required
       />
+       {formik.touched.lastName && formik.errors.lastName ? (
+                  <div className="text-black text-sm">{formik.errors.lastName}</div>
+                ) : null}
       </div>
 
     <div className='w-[100%] mb-1'> 
@@ -73,8 +93,10 @@ const Register = () => {
         name="address"
         onChange={formik.handleChange}
         value={formik.values.address}
-        required
-      />
+        />
+         {formik.touched.address && formik.errors.address ? (
+                  <div className="text-black text-sm">{formik.errors.address}</div>
+                ) : null}
       </div>
 
     <div className='w-[100%] mb-1'>
@@ -83,8 +105,10 @@ const Register = () => {
          name="phone"
          onChange={formik.handleChange}
          value={formik.values.phone}
-         required
        />
+         {formik.touched.phone && formik.errors.phone ? (
+                  <div className="text-black text-sm">{formik.errors.phone}</div>
+                ) : null}
        </div>
      <div className='w-[100%] mb-1'>
           <Input type="email" label="Email" variant="bordered" 
@@ -92,8 +116,10 @@ const Register = () => {
              name="email"
              onChange={formik.handleChange}
              value={formik.values.email}
-             required
-       />
+             />
+             {formik.touched.email && formik.errors.email ? (
+                  <div className="text-black text-sm">{formik.errors.email}</div>
+                ) : null}
        </div>
 
      <div className='w-[100%] mb-1'>
@@ -103,8 +129,10 @@ const Register = () => {
         
          onChange={formik.handleChange}
          value={formik.values.password}
-         required
        />
+        {formik.touched.password && formik.errors.password ? (
+                  <div className="text-black text-sm">{formik.errors.password}</div>
+                ) : null}
        </div>
 
        <div className='w-[100%] text-base mt-3 mb-3'>
