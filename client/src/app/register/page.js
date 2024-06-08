@@ -6,6 +6,8 @@ import {Button, Input, dropdown} from "@nextui-org/react";
 import { useFormik,ErrorMessage} from 'formik';
 import {RadioGroup, Radio} from "@nextui-org/react";
 import * as Yup from "yup";
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -27,6 +29,7 @@ const validationSchema = Yup.object().shape({
 
 const Register = () => {
 
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -50,7 +53,14 @@ const Register = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)
     };
-    const response = await fetch('http://localhost:4000/register', requestOptions)
+    const response = await fetch('http://localhost:4000/register', requestOptions);
+    const data = await response.json();
+    if(response.status==200){
+      toast.success(data.msg);
+      router.push('/login'); 
+      }
+      else
+      {toast.error(data.msg);}
     }
 
   return (

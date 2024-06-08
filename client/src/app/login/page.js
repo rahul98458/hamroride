@@ -1,11 +1,41 @@
+'use client'
 import React from 'react'
 import {Button,Input} from "@nextui-org/react";
 import Link from "next/link";
 import CustumNavbar from '@/component/navbar/page';
+import { useFormik,ErrorMessage} from 'formik';
+import toast from 'react-hot-toast';
 
 
 const login = () => {
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password:'',
+    },
+    onSubmit: values => {
+      loginUser(values)
+    },
+  });
+
+  const loginUser =async(values)=>{
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values)
+  };
+  const response = await fetch('http://localhost:4000/login', requestOptions);
+  const data = await response.json();
+  if(response.status==200){
+    toast.success(data.msg);
+    }
+    else
+    {toast.error(data.msg);}
+  }
+
   return (
+    <form onSubmit={formik.handleSubmit}>
    <div> 
     <CustumNavbar/>
     <br/><br/><br/>
@@ -15,13 +45,25 @@ const login = () => {
       <h1>Login to Hamro Ride</h1>
       </div>
       <br/>
-      <Input type="email" variant="bordered" label="Email"  /><br/>
-      <Input type="password" label="Password"  variant="bordered"/>
+      <Input type="email" variant="bordered" label="Email" 
+       id="email"
+       name="email"
+       onChange={formik.handleChange}
+       value={formik.values.email}
+       isRequired
+      /><br/>
+      <Input type="password" label="Password"  variant="bordered"
+       id="password"
+       name="password"
+       onChange={formik.handleChange}
+       value={formik.values.password}
+       isRequired
+      />
     <br/><br/>
      <div className='text-blue-600 text-center '>
-      <Button radius="full" className="bg-blue-600 text-white shadow-lg">
+      <Button type="submit" radius="full" className="bg-blue-600 text-white shadow-lg">
       Login
-    </Button>
+    </Button >
     <br/><br/>
     <div className='font-bold'>
    <Link href='/register'> Don't have an account?</Link>  
@@ -31,6 +73,7 @@ const login = () => {
     
      </div>
      </div>
+     </form>
   )
 }
 

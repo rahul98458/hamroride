@@ -39,18 +39,18 @@ role: {
 const User = mongoose.model('User', userSchema);
 
 app.post('/register', async(req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
   const passwordHash=await bcrypt.hash(req.body?.password,saltRounds)
   req.body.password =passwordHash
   const phoneExist =await User.exists({phone:req.body.phone})
   const emailExist =await User.exists({email:req.body.email})
   if(phoneExist)
     {
-    return  res.json({msg:"phone already taken"})
+    return  res.status(409).json({msg:"phone already taken"})
     }
     else if(emailExist)
     {
-      return  res.json({msg:"email id already taken"})
+      return  res.status(409).json({msg:"email id already taken"})
     }
     else
     {
@@ -60,7 +60,7 @@ app.post('/register', async(req, res) => {
 })
 
 app.post('/login', async(req, res) => {
-  const user = await User.findOne({phone:req.body.phone})
+  const user = await User.findOne({email:req.body.email})
   if(user)
     {
      const passwordMatch=await bcrypt.compare(req.body.password,user.password);
@@ -71,12 +71,12 @@ app.post('/login', async(req, res) => {
       }
       else
       {
-        res.json({msg:"password doesnot match"})
+        res.status(401).json({msg:"password doesnot match"})
       }
     }
     else
     {
-      return res.json({msg:"user not registered"})
+      return res.status(401).json({msg:"user not registered"})
     }
 
 // res.json({msg:"send"})
