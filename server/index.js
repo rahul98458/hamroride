@@ -11,6 +11,8 @@ require('dotenv').config()
 app.use(express.json())
 const port = process.env.PORT
 dbConnect()
+var cors = require('cors')
+app.use(cors())
 
 const { Schema } = mongoose;
 
@@ -37,7 +39,8 @@ role: {
 const User = mongoose.model('User', userSchema);
 
 app.post('/register', async(req, res) => {
-  const passwordHash=await bcrypt.hash(req.body.password,saltRounds)
+  console.log(req.body)
+  const passwordHash=await bcrypt.hash(req.body?.password,saltRounds)
   req.body.password =passwordHash
   const phoneExist =await User.exists({phone:req.body.phone})
   const emailExist =await User.exists({email:req.body.email})

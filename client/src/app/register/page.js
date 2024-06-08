@@ -29,8 +29,13 @@ const Register = () => {
     },
   });
 
-    const registerUser =(values)=>{
-      fetch('http://localhost:4000/register')
+    const registerUser =async(values)=>{
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+    };
+    const response = await fetch('http://localhost:4000/register', requestOptions)
     }
 
   return (
@@ -48,6 +53,7 @@ const Register = () => {
         name="firstName"
         onChange={formik.handleChange}
         value={formik.values.firstName}
+          
       />
       </div>
 
@@ -57,6 +63,7 @@ const Register = () => {
         name="lastName"
         onChange={formik.handleChange}
         value={formik.values.lastName}
+        required
       />
       </div>
 
@@ -66,6 +73,7 @@ const Register = () => {
         name="address"
         onChange={formik.handleChange}
         value={formik.values.address}
+        required
       />
       </div>
 
@@ -75,6 +83,7 @@ const Register = () => {
          name="phone"
          onChange={formik.handleChange}
          value={formik.values.phone}
+         required
        />
        </div>
      <div className='w-[100%] mb-1'>
@@ -83,6 +92,7 @@ const Register = () => {
              name="email"
              onChange={formik.handleChange}
              value={formik.values.email}
+             required
        />
        </div>
 
@@ -93,6 +103,7 @@ const Register = () => {
         
          onChange={formik.handleChange}
          value={formik.values.password}
+         required
        />
        </div>
 
@@ -135,12 +146,12 @@ const Register = () => {
 
        <div  className='w-[100%] flex justify-center items-center mb-3 '>
        <div className='text-base'>
-       <label for="cars">Registered As a:</label>
+       <label for="registeras">Registered As a:</label>
 
-        <select id="registeras"  onChange={formik.handleChange}
-         value={formik.values.registeras} >
-            <option  name="registeras" value="rider">Rider</option>
-            <option  name="registeras" value="passenger">Passenger</option>
+        <select id="registeras"  name="registeras" onChange={formik.handleChange}>
+        <option value="choose">Choose One</option>
+            <option value="rider">Rider</option>
+            <option value="passenger">Passenger</option>
         </select>
        </div>
        </div>
