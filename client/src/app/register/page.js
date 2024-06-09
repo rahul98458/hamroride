@@ -39,7 +39,7 @@ const Register = () => {
       password:'',
       phone:'',
       gender: '',
-      registeras:'',
+      role:'',
     },
     validationSchema:validationSchema,
     onSubmit: values => {
@@ -186,7 +186,8 @@ const Register = () => {
        <div className='text-base'>
        <label for="registeras">Registered As a:</label>
 
-        <select id="registeras"  name="registeras" onChange={formik.handleChange}>
+        <select id="role"  name="role" onChange={formik.handleChange} 
+           >
         <option value="choose">Choose One</option>
             <option value="rider">Rider</option>
             <option value="passenger">Passenger</option>

@@ -30,9 +30,8 @@ const SearchRide = () => {
      <HamroRideLogo/>
     </div>
     <div className='flex'>
-    <div className='flex p-2 space-x-4'> 
     
-    
+    {/* <div className='flex p-2 space-x-4'> 
       <Link href="/publishride">
     <div className='text-blue-600 flex'>
       <div className=' mr-1 mt-1 ml-2 '>
@@ -42,7 +41,7 @@ const SearchRide = () => {
       </div>
       </div>
       </Link>
-      </div>
+      </div> */}
      
      
       <div>
@@ -57,8 +56,8 @@ const SearchRide = () => {
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Login</Link></DropdownItem>
-      <DropdownItem key="signup" className='text-blue-600' > <Link href="/register">SignUp</Link></DropdownItem>
+        <DropdownItem key="login" className='text-blue-600' ><Link href="/profile">Profile</Link></DropdownItem>
+      <DropdownItem key="signup" className='text-blue-600' > <Link href="/">SignOut</Link></DropdownItem>
         
       </DropdownMenu>
     </Dropdown>

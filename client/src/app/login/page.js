@@ -5,10 +5,12 @@ import Link from "next/link";
 import CustumNavbar from '@/component/navbar/page';
 import { useFormik,ErrorMessage} from 'formik';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 
 const login = () => {
 
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -27,8 +29,13 @@ const login = () => {
   };
   const response = await fetch('http://localhost:4000/login', requestOptions);
   const data = await response.json();
+  
   if(response.status==200){
     toast.success(data.msg);
+        if(data.role==='rider')
+          router.push('/publishride'); 
+        else
+        router.push('/searchride');
     }
     else
     {toast.error(data.msg);}

@@ -67,7 +67,8 @@ app.post('/login', async(req, res) => {
      if(passwordMatch)
       {
         const token = jwt.sign({ phone:req.body.phone }, process.env.SECRET_KEY);
-         res.json({msg:"password match",token})
+        const role = user.role;
+         res.json({msg:"Login Successful",token,role})
       }
       else
       {
