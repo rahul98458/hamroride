@@ -40,8 +40,9 @@ role: {
 const rideSchema = new Schema({
   leavingFrom: String,
   goingTo : String, 
-  date: Date,
+ // date: Date,
   passenger:Number,
+  publishBy:String,
 });
 
 const User = mongoose.model('User', userSchema);
@@ -77,7 +78,8 @@ app.post('/login', async(req, res) => {
       {
         const token = jwt.sign({ phone:req.body.phone }, process.env.SECRET_KEY);
         const role = user.role;
-         res.json({msg:"Login Successful",token,role})
+        const email = user.email;
+         res.json({msg:"Login Successful",token,role,email})
       }
       else
       {
@@ -94,9 +96,9 @@ app.post('/login', async(req, res) => {
 
 
 app.post('/publishride', async(req, res) => {
-  //console.log(req.body)
-      await Ride.create(req.body)
-      return res.json({msg:"ride published"})
+//  console.log(req.body)
+       await Ride.create(req.body)
+       return res.json({msg:"ride published"})
 })
 
 app.get('/users', async(req, res) => {

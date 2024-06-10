@@ -11,16 +11,27 @@ import {DatePicker} from "@nextui-org/react";
 import HamroRideLogo from '../../component/logo/page';
 import { FaSearch } from 'react-icons/fa';
 import { Formik, useFormik } from 'formik';
+import { useSelector} from 'react-redux';
+import { login,logout } from '@/redux/reducerSlices/userSlice';
+import toast from 'react-hot-toast';
+
+
+
 
 
 const publishride = () => {
-
+ // const dispatch = useDispatch();
+  const login = useSelector(state=>state.user.email)
+ 
+  
+  
   const formik = useFormik({
     initialValues: {
       leavingFrom: '',
       goingTo: '',
-      date: null,
+   //   date: null,
       passenger:1,
+      publishBy:login,
     },
    // validationSchema:validationSchema,
     onSubmit: values => {
@@ -91,7 +102,10 @@ const publishride = () => {
         
         
          <div>
-         <div className='text-blue-600'>
+         <div className='text-blue-600 flex'>
+          <div  className='m-2' >
+          {login}
+          </div>
          <Dropdown>
          <DropdownTrigger>
            <Button className='text-blue-600 '>
@@ -125,21 +139,21 @@ const publishride = () => {
    
          <form onSubmit={formik.handleSubmit} className="flex w-full gap-4">
    
-   <div className='m-4'>  <Input type="text" label="Leaving From"  isRequired
+   <div className='m-4 w-50 mr-8'>  <Input type="text" label="Leaving From"  isRequired
    id="leavingFrom"
    name="leavingFrom"
    onChange={formik.handleChange}
    value={formik.values.leavingFrom}  
    /></div>
    
-   <div className='m-4'>  <Input type="text" label="Going To"  isRequired
+   <div className='m-4 w-50'>  <Input type="text" label="Going To"  isRequired
    id="goingTO"
    name="goingTo"
    onChange={formik.handleChange}
    value={formik.values.goingTo}  
    /></div>
    
-   <div className='m-4'> 
+   {/* <div className='m-4'> 
    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
    <DatePicker 
    label="Date"
@@ -149,14 +163,24 @@ const publishride = () => {
    onChange={handleDateChange}
    />
    </div>
-   </div>
+   </div> */}
    
-   <div className='m-4 text-black mt-6'> 
+   <div className='text-black w-72'> 
    Passenger
-   <button className='m-2 bg-blue-400 h-8 w-8' onClick={handleDecreasePassenger}>-</button> 
+   <br/>
+   <button className='m-2 bg-blue-400 h-8 w-5' type='button' onClick={handleDecreasePassenger}>-</button> 
     {formik.values.passenger}
-    <button className='m-2 bg-blue-400 h-8 w-8' onClick={handleIncreasePassenger}>+</button>
+    <button className='m-2 bg-blue-400 h-8 w-5'type='button' onClick={handleIncreasePassenger}>+</button>
    
+   </div>
+
+   <div className='m-4'>
+      <Input type="text" label="Publish By"  
+              id="publishBy"
+              name="publishBy"
+              onChange={formik.handleChange}
+              value={formik.values.publishBy} 
+              readOnly/>
    </div>
    
    
