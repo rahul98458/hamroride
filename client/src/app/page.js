@@ -6,10 +6,16 @@ import {Input} from "@nextui-org/react";
 import {DatePicker} from "@nextui-org/react";
 import Bottom from '@/component/about/page';
 import CustumNavbar from '@/component/navbar/page';
-
-
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
+
+  const router = useRouter();
+
+  const handleClick =()=>
+    {
+      router.push('/login');
+    }
 
   let [passenger, setPassenger] = useState(1);
 
@@ -54,8 +60,8 @@ const Home = () => {
     </div>
       
     
-
-     <Button color="primary" className='mt-6 mr-4 h-12'>Search</Button>
+           
+     <Button color="primary" onClick={()=>handleClick()} className='mt-6 mr-4 h-12'>Search</Button>
     </div>
 
       </div>

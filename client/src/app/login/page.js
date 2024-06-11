@@ -7,7 +7,8 @@ import { useFormik } from 'formik';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux'
-import { login,logout } from '@/redux/reducerSlices/userSlice';
+import { setLoginDetails } from '@/redux/reducerSlices/userSlice';
+
 
 
 const Login = () => {
@@ -37,7 +38,8 @@ const Login = () => {
 
     if (response.status === 200) {
       toast.success(data.msg);
-      if (data.role === 'rider') {
+      dispatch(setLoginDetails(data))
+      if (data.user.role === 'rider') {
         router.push('/publishride');
       } else {
         router.push('/searchride');
@@ -61,11 +63,11 @@ const Login = () => {
             <Input type="email" variant="bordered" label="Email" 
               id="email"
               name="email"
-            //  onChange={formik.handleChange}
+            
               value={formik.values.email}
               isRequired
               onChange={formik.handleChange }
-             // onKeyDown={(e)=> dispatch(login(e.target.value))}
+            
             />
             <br />
             <Input type="password" label="Password" variant="bordered"
@@ -80,7 +82,7 @@ const Login = () => {
             
             <div className='text-blue-600 text-center'>
               <Button type="submit" radius="full" className="bg-blue-600 text-white shadow-lg" 
-                 onClick={() => dispatch(login(formik.values.email))}>
+                >
                 Login
               </Button>
               <br /><br />

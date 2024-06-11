@@ -19,7 +19,7 @@ const CustumNavbar = () => {
     </div>
     <div className='flex'>
     <div className='flex p-2 space-x-4'> 
-    <Link href="/searchride">
+    <Link href="/login">
     <div className='text-blue-600 flex'>
       <div className='mr-1 mt-1'>
         <FaSearch className='text-xl' />
@@ -29,7 +29,7 @@ const CustumNavbar = () => {
       </div>
       </Link>
     
-      <Link href="/publishride">
+      <Link href="/login">
     <div className='text-blue-600 flex'>
       <div className=' mr-1 mt-1 ml-2 '>
         <CgAdd className='text-xl' />

@@ -77,9 +77,8 @@ app.post('/login', async(req, res) => {
      if(passwordMatch)
       {
         const token = jwt.sign({ phone:req.body.phone }, process.env.SECRET_KEY);
-        const role = user.role;
-        const email = user.email;
-         res.json({msg:"Login Successful",token,role,email})
+       
+         res.json({msg:"Login Successful",token,user})
       }
       else
       {
@@ -100,6 +99,25 @@ app.post('/publishride', async(req, res) => {
        await Ride.create(req.body)
        return res.json({msg:"ride published"})
 })
+
+
+
+app.post('/searchride', async(req, res) => {
+  const search = await Ride.find({laevingFrom:req.body.leavingFrom} && {goingTo:req.body.goingTo})
+  if(search)
+    {
+     
+         res.json({msg:"ride found",search})
+    }
+    else
+    {
+      return res.status(401).json({msg:"ride not found"})
+    }
+
+// res.json({msg:"send"})
+})
+
+
 
 app.get('/users', async(req, res) => {
  const findUser = await User.find()

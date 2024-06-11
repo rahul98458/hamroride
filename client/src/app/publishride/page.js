@@ -12,7 +12,6 @@ import HamroRideLogo from '../../component/logo/page';
 import { FaSearch } from 'react-icons/fa';
 import { Formik, useFormik } from 'formik';
 import { useSelector} from 'react-redux';
-import { login,logout } from '@/redux/reducerSlices/userSlice';
 import toast from 'react-hot-toast';
 
 
@@ -20,10 +19,10 @@ import toast from 'react-hot-toast';
 
 
 const publishride = () => {
- // const dispatch = useDispatch();
-  const login = useSelector(state=>state.user.email)
+
+  const {userDetails} = useSelector(state=>state.user)
+ const email = userDetails.email; 
  
-  
   
   const formik = useFormik({
     initialValues: {
@@ -31,7 +30,7 @@ const publishride = () => {
       goingTo: '',
    //   date: null,
       passenger:1,
-      publishBy:login,
+      publishBy:email,
     },
    // validationSchema:validationSchema,
     onSubmit: values => {
@@ -104,7 +103,7 @@ const publishride = () => {
          <div>
          <div className='text-blue-600 flex'>
           <div  className='m-2' >
-          {login}
+       {email}
           </div>
          <Dropdown>
          <DropdownTrigger>
