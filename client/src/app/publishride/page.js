@@ -11,9 +11,9 @@ import {DatePicker} from "@nextui-org/react";
 import HamroRideLogo from '../../component/logo/page';
 import { FaSearch } from 'react-icons/fa';
 import { Formik, useFormik } from 'formik';
-import { useSelector} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import toast from 'react-hot-toast';
-
+import { logOutUser } from '@/redux/reducerSlices/userSlice';
 
 
 
@@ -21,21 +21,26 @@ import toast from 'react-hot-toast';
 const publishride = () => {
 
   const {userDetails} = useSelector(state=>state.user)
+  const dispatch = useDispatch();
  const email = userDetails.email; 
- 
+    
+const LogOut=()=>
+  {
+         dispatch(logOutUser);
+  }
   
   const formik = useFormik({
     initialValues: {
       leavingFrom: '',
       goingTo: '',
-   //   date: null,
+    //  date: null,
       passenger:1,
       publishBy:email,
     },
    // validationSchema:validationSchema,
     onSubmit: values => {
-     // console.log(values)
-      publishRide(values)
+      console.log(values)
+    //  publishRide(values)
     },
   });
 
@@ -116,7 +121,7 @@ const publishride = () => {
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
            <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
-         <DropdownItem key="signup" className='text-blue-600' > <Link href="/">SignOut</Link></DropdownItem>
+         <DropdownItem key="signup" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/">LogOut</Link></DropdownItem>
            
          </DropdownMenu>
        </Dropdown>
@@ -152,7 +157,7 @@ const publishride = () => {
    value={formik.values.goingTo}  
    /></div>
    
-   {/* <div className='m-4'> 
+    {/* <div className='m-4'> 
    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
    <DatePicker 
    label="Date"
@@ -162,7 +167,7 @@ const publishride = () => {
    onChange={handleDateChange}
    />
    </div>
-   </div> */}
+   </div>  */}
    
    <div className='text-black w-72'> 
    Passenger

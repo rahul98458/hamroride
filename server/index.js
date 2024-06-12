@@ -40,13 +40,15 @@ role: {
 const rideSchema = new Schema({
   leavingFrom: String,
   goingTo : String, 
- // date: Date,
+  // date: {
+  //   type:Date,
+  // },
   passenger:Number,
   publishBy:String,
 });
 
 const User = mongoose.model('User', userSchema);
-const Ride = mongoose.model('Ride', rideSchema);
+const Ride =  mongoose.model('Ride', rideSchema);
 
 app.post('/register', async(req, res) => {
   //console.log(req.body)
@@ -95,7 +97,7 @@ app.post('/login', async(req, res) => {
 
 
 app.post('/publishride', async(req, res) => {
-//  console.log(req.body)
+// console.log(req.body)
        await Ride.create(req.body)
        return res.json({msg:"ride published"})
 })

@@ -16,14 +16,19 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux'
 import { setSearchResult } from '@/redux/reducerSlices/searchResultSlice';
-
+import { logOutUser } from '@/redux/reducerSlices/userSlice';
 const searchRide = () => {
 
   const {userDetails} = useSelector(state=>state.user)
   const router = useRouter();
   const dispatch = useDispatch();
  const email = userDetails.email; 
- 
+  const uName = userDetails.firstName;
+
+    const logOut=()=>
+      {
+        dispatch(logOutUser)
+      }
   
   const formik = useFormik({
     initialValues: {
@@ -108,7 +113,7 @@ const searchRide = () => {
          <div>
          <div className='text-blue-600 flex'>
           <div  className='m-2' >
-       {email}
+       {uName}
           </div>
          <Dropdown>
          <DropdownTrigger>
@@ -121,7 +126,7 @@ const searchRide = () => {
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
            <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
-         <DropdownItem key="signup" className='text-blue-600' > <Link href="/">SignOut</Link></DropdownItem>
+         <DropdownItem key="signup" className='text-blue-600' > <Link onClick={()=>logOut()} href="/">SignOut</Link></DropdownItem>
            
          </DropdownMenu>
        </Dropdown>
