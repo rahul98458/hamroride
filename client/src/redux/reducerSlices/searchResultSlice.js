@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = { 
  
-  searchResultDetails: {},
+  searchResultDetails: [],
 }
 
 const searchResultSlice = createSlice({

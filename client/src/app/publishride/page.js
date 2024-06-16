@@ -23,6 +23,7 @@ const publishride = () => {
   const {userDetails} = useSelector(state=>state.user)
   const dispatch = useDispatch();
  const email = userDetails.email; 
+ const uName = userDetails.firstName;
     
 const LogOut=()=>
   {
@@ -33,14 +34,14 @@ const LogOut=()=>
     initialValues: {
       leavingFrom: '',
       goingTo: '',
-    //  date: null,
+      date: null,
       passenger:1,
       publishBy:email,
     },
    // validationSchema:validationSchema,
     onSubmit: values => {
-      console.log(values)
-    //  publishRide(values)
+    //  console.log(values)
+      publishRide(values)
     },
   });
 
@@ -108,7 +109,7 @@ const LogOut=()=>
          <div>
          <div className='text-blue-600 flex'>
           <div  className='m-2' >
-       {email}
+       {uName}
           </div>
          <Dropdown>
          <DropdownTrigger>
@@ -157,17 +158,19 @@ const LogOut=()=>
    value={formik.values.goingTo}  
    /></div>
    
-    {/* <div className='m-4'> 
+    <div className='m-4'> 
    <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
    <DatePicker 
+   id='date'
+   name='date'
    label="Date"
    className="max-w-[284px]"
    isRequired
    value={formik.values.date}
-   onChange={handleDateChange}
+   onChange={(value)=>formik.setFieldValue('date',value)}
    />
    </div>
-   </div>  */}
+   </div> 
    
    <div className='text-black w-72'> 
    Passenger

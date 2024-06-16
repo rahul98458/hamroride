@@ -51,19 +51,34 @@ const searchRide = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values)
   };
-
+  
   const response = await fetch('http://localhost:4000/searchride', requestOptions);
   const data = await response.json();
   
-  if (response.status === 200) {
-    toast.success(data.msg);
-   // console.log(data)
-     dispatch(setSearchResult(data))
-    router.push('/searchresult');
+  // if (response.status === 200) {
+  //   toast.success(data.msg);
+  //  //console.log(data.search)
+  //   dispatch(setSearchResult(data))
+  //   router.push('/searchresult');
     
-  } else {
-    toast.error(data.msg);
-  }
+  // } else if(response.status === 204){
+  //   toast.error('Ride not found');
+  //   dispatch(setSearchResult([]));
+  // }
+
+  const length =data.search.length;
+  if(length>=1)
+    {
+    toast.success('Ride found');
+    dispatch(setSearchResult(data))
+    router.push('/searchresult');
+    }
+    else
+          {
+            toast.error('Ride not found');
+          }
+    
+
 };
 
   // let [passenger, setPassenger] = useState(1);

@@ -4,7 +4,7 @@ import {Image} from "@nextui-org/image";
 import {Button} from "@nextui-org/react";
 import {Input} from "@nextui-org/react";
 import {DatePicker} from "@nextui-org/react";
-import Bottom from '@/component/about/page';
+import Bottom from '@/component/Buttom/page';
 import CustumNavbar from '@/component/navbar/page';
 import { useRouter } from 'next/navigation';
 
@@ -122,7 +122,7 @@ const Home = () => {
            </div>
         </div>
 
-       <div className='bg-gray-600 '>
+       <div className='flex flex-col'>
     <Bottom/>
     </div>
     </div>

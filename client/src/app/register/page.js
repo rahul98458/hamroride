@@ -6,6 +6,7 @@ import CustumNavbar from '@/component/navbar/page';
 import { useFormik} from 'formik';
 import * as Yup from "yup";
 import toast from 'react-hot-toast';
+import { Router } from 'next/navigation';
 
 const signupSchema = Yup.object().shape({
   firstName: Yup.string()
