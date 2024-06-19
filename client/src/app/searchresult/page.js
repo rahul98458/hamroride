@@ -15,6 +15,7 @@ const searchResult = () => {
         <strong  className='ml-2'>Passenger:</strong> {item.passenger}
         <strong  className='ml-2'>Date:</strong> {item.date.year}/{item.date.month}/{item.date.day}
         <strong  className='ml-2'>Ride By:</strong> {item.publishBy}
+        <strong  className='ml-2'>Price:</strong> {item.price}
         <Button className='ml-2' type='primary'>Book Ride</Button>
         </div>
       </div>

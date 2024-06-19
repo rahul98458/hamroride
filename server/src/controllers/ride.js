@@ -30,4 +30,11 @@ const searchRide = async(req, res) => {
        res.json({search})
       }
 
-module.exports={publishRide,searchRide}
+      const myPublishRide = async(req, res) => {
+      const myPublish = await Ride.find({publishBy:req.params.userEmail})
+    // console.log(myPublish);
+      res.json({msg:"Your All Published Ride",myPublish})
+     
+      }
+
+module.exports={publishRide,searchRide,myPublishRide}

@@ -1,70 +1,63 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link';
 import {Button, Input} from "@nextui-org/react";
 import CustumNavbar from '@/component/navbar/page';
 import { useFormik} from 'formik';
-import * as Yup from "yup";
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-
-const signupSchema = Yup.object().shape({
-  firstName: Yup.string()
-      .min(2,'Too Short')
-      .required('First Name is required'),
-  lastName: Yup.string()
-      .min(2,'Too Short')
-      .required('Last Name is required'),    
-  email: Yup.string()
-      .email('Invalid email format')
-      .required('Email is required'),
-  address: Yup.string()
-      .min(2,'Too Short')
-      .required('Address is required'),
-  password: Yup.string()
-      .min(8, 'Password must be at least 8 characters long')
-      .required('Password is required'),
-  phone: Yup.string()
-      .matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits')
-      .required('Phone number is required'),    
-});
+import { useSelector } from 'react-redux';
    
-
-const Register = () => {
+const KycVerifyRider = () => {
+   
+  const {userDetails}=useSelector(state=>state.user);
+  const{firstName,lastName,email,address,phone,_id}=userDetails;
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      address:'',
-      password:'',
-      phone:'',
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      address:address,
+      phone:phone,
       gender: '',
-      role:'',
+      licenseNum:'',
+      citizenshipNum:'',
     },
-    validationSchema:signupSchema,
     onSubmit: values=> {
-      registerUser(values);
+        submitKycUser(values);
     }
   });
+      
+  const Rhome=()=>
+    {
+        router.push('/publishride')
+    }
 
-  const registerUser =async(values)=>{
+  const  submitKycUser =async(values)=>{
+    let formData = new FormData(); 
+   
+    formData.append('citizenshipNum', values.citizenshipNum);
+    formData.append('licenseNum', values.licenseNum);
+    formData.append('userId', _id);
+    formData.append('citizenshipPhoto', cimage);
+    formData.append('licensePhoto', limage);
+
+    
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values)
-  };
-  const response = await fetch('http://localhost:4000/register', requestOptions);
-  const data = await response.json();
-  if(response.status==200){
-    toast.success(data.msg);
-    router.push('/login'); 
-    }
-    else
-    {toast.error(data.msg);}
-  }
+      body: formData
+    };
 
+  const response = await fetch('http://localhost:4000/rider-kyc', requestOptions);
+  const data = await response.json();
+  if(data.msg){
+    toast(data.msg)
+  }
+}
+       
+  const [cimage, setCImage] = useState(null)
+  const [limage, setLImage] = useState(null)
 
   return (
     <div>
@@ -73,10 +66,10 @@ const Register = () => {
          <div className='flex justify-center items-center  '>
          <div className='w-[45%]  p-8 bg-gray-100 rounded-3xl shadow-2xl p-20 m-5 space-y-7	'>
      <div className='text-blue-600 text-center text-5xl'>
-      <h1>Sign Up</h1>
+      <h1>Kyc Verification</h1>
     <br/></div>
     <div>
-    <Input type="firstName" variant="bordered" label="First Name" 
+    <Input type="text" variant="bordered" label="First Name" 
     id="firstName"
     name="firstName"
     onChange={formik.handleChange}
@@ -87,7 +80,7 @@ const Register = () => {
         ) : null}
         </div>
         <div>
-    <Input type="lastName" variant="bordered" label="Last Name" 
+    <Input type="text" variant="bordered" label="Last Name" 
      id="lastName"
      name="lastName"
      onChange={formik.handleChange}
@@ -109,7 +102,7 @@ const Register = () => {
                 ) : null}
     </div>
     <div>
-    <Input type="address" variant="bordered" label="Address" 
+    <Input type="text" variant="bordered" label="Address" 
      id="address"
      name="address"
      onChange={formik.handleChange}
@@ -119,28 +112,19 @@ const Register = () => {
                   <div className="text-black text-sm">{formik.errors.address}</div>
                 ) : null}
       </div>
-      <div>
-    <Input type="password" label="Password"  variant="bordered"
-     id="password"
-     name="password"
-     onChange={formik.handleChange}
-     value={formik.values.password}
-     />
-     {formik.touched.password && formik.errors.password ? (
-                  <div className="text-black text-sm">{formik.errors.password}</div>
-                ) : null}
-    </div>
+     
     <div>
-    <Input type="String" variant="bordered" label="Phone Number" 
+    <Input type="text" variant="bordered" label="Phone Number" 
      id="phone"
      name="phone"
      onChange={formik.handleChange}
-     value={formik.values.phoneNumber}
+     value={formik.values.phone}
       />
-       {formik.touched.phone && formik.errors.phone ? (
+       {formik.touched.phoneNumber && formik.errors.phone ? (
                   <div className="text-black text-sm">{formik.errors.phone}</div>
                 ) : null}
       </div>
+
     <br/>
 
      <div className='w-[100%] text-base mt-3 mb-3'>
@@ -180,35 +164,50 @@ const Register = () => {
         </label>
        </div>
 
-       <div  className='w-[100%] flex justify-center items-center mb-3 '>
-       <div className='text-base'>
-       <label for="registeras">Registered As a:</label>
+       <div>
+    <Input type="text" variant="bordered" label="CitizenShip Number" 
+     id="citizenshipNum"
+     name="citizenshipNum"
+     onChange={formik.handleChange}
+     value={formik.values.citizenshipNum}
+      />
+       {formik.touched.citizenshipNum && formik.errors.citizenshipNum ? (
+                  <div className="text-black text-sm">{formik.errors.citizenshipNum}</div>
+                ) : null}
+      </div>
 
-        <select id="role"  name="role" onChange={formik.handleChange} 
-           >
-        <option value="choose">Choose One</option>
-            <option value="rider">Rider</option>
-            <option value="passenger">Passenger</option>
-        </select>
-       </div>
+      <div>
+    <Input type="text" variant="bordered" label="License Number" 
+     id="licenseNum"
+     name="licenseNum"
+     onChange={formik.handleChange}
+     value={formik.values.licenseNum}
+      />
+       {formik.touched.licenseNum && formik.errors.licenseNum ? (
+                  <div className="text-black text-sm">{formik.errors.licenseNum}</div>
+                ) : null}
+      </div>
+       
+       <div>Upload CitizenShip
+        <input type='file' className='mt-1' name='citizenshipPhoto'
+          onChange={(e)=>setCImage(e.target.files[0])}/>
        </div>
 
+       <div>Upload License
+        <input type='file' className='mt-1' name='licensePhoto'
+         onChange={(e)=>setLImage(e.target.files[0])}/>
+       </div>
 
      <div className='text-blue-600 text-center '>
-      <Button type='submit' radius="full" className="bg-blue-600 text-white shadow-lg">
-      Sign Up
+      <Button onClick={()=>Rhome()} type='submit' radius="full" className="bg-blue-600 text-white shadow-lg">
+      Submit
     </Button>
     <br/><br/>
-    <div className='font-bold'>
-   <Link href='/login'> Already Have an Account?</Link> 
-</div></div>
-
-
-
+    </div>
    </div></div>
    </form>
    </div>
   )
 }
 
-export default Register;
+export default KycVerifyRider;

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = { 
   isLoggedIn: false,
   token: '',
+  kycVerifiedStatus: '',
   userDetails: {}
 }
 
@@ -22,9 +23,17 @@ const userSlice = createSlice({
     logOutUser(state, actions)
     {
            return initialState;
-    }
+    },
+       
+    setUserKycVerifiedStatus(state, actions) {
+      return {
+        ...state,
+        kycVerifiedStatus: actions.payload
+      }
+},
+
   },
 })
 
-export const { setLoginDetails ,logOutUser} = userSlice.actions
+export const { setLoginDetails ,logOutUser,setUserKycVerifiedStatus} = userSlice.actions
 export default userSlice.reducer

@@ -6,6 +6,7 @@ const rideSchema = new Schema({
     date:Object,
     passenger:Number,
     publishBy:String,
+    price:Number,
   });
 
   const Ride =  mongoose.model('Ride', rideSchema);

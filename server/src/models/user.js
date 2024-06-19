@@ -17,7 +17,8 @@ role: {
     type: String,
     enum : ['admin','rider','passenger'],
     default: 'passenger'
-}
+},
+
   
 });
 const User = mongoose.model('User', userSchema);

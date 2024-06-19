@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const UserKyc = require('../models/userKyc');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
@@ -48,4 +49,44 @@ const registerUser = async(req, res) => {
   // res.json({msg:"send"})
   }
 
-  module.exports={registerUser,loginUser}
+
+  const updateRiderKyc = async(req,res)=>
+    {
+            req.body.citizenshipPhoto = req.files.citizenshipPhoto[0].filename
+            req.body.licensePhoto = req.files.licensePhoto[0].filename
+            req.body. kycVerifiedStatus = 'pending'
+          // console.log(req.body)
+           await UserKyc.create(req.body)
+           res.json(
+            {msg:"kyc submitted.Wait for Verification!"}
+          )
+    }
+
+
+    const updatePassengerKyc = async(req,res)=>
+      {
+       // console.log(req.file);
+              req.body.citizenshipPhoto = req.file.filename
+              
+              req.body. kycVerifiedStatus = 'pending'
+            // console.log(req.body)
+             await UserKyc.create(req.body)
+             res.json(
+              {msg:"kyc submitted.Wait for Verification!"}
+            )
+      }
+      
+     const checkKycStatusByUserId = async (req,res)=>{
+            const kycDetails =await UserKyc.findOne({userId: req.params.userId})
+            if(!kycDetails){
+             return res.json({
+                kycVerifiedStatus: 'unVerified'
+              })
+            }
+           return res.json({
+              kycVerifiedStatus: kycDetails.kycVerifiedStatus
+            })
+        
+          }
+
+  module.exports={registerUser,loginUser,updateRiderKyc,updatePassengerKyc,checkKycStatusByUserId}

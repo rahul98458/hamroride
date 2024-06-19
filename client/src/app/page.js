@@ -85,7 +85,7 @@ const Home = () => {
            </div>
         </div>
     
-    <div className='bg-blue-600 flex items-center justify-center mb-4'>
+    <div className='bg-blue-400 flex items-center justify-center mb-4'>
     <div className='m-2 flex items-center justify-center '>
     <Image  className=' p-4 '
        width={400}

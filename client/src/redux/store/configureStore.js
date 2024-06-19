@@ -4,14 +4,16 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import userSlice from '../reducerSlices/userSlice';
  import searchResultSlice from '../reducerSlices/searchResultSlice';
+import publishResultSlice from '../reducerSlices/publishResultSlice';
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['searchResult']
+    blacklist: ['searchResult','publishResultSlice']
   }
   const rootReducer = combineReducers({ 
     user: userSlice,
-     searchResult:searchResultSlice
+    searchResult:searchResultSlice,
+    publishResult:publishResultSlice,
 
   })
   const persistedReducer = persistReducer(persistConfig, rootReducer)  

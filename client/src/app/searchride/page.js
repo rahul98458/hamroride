@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { use, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { CgAdd } from "react-icons/cg";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import { FaCircleArrowDown } from "react-icons/fa6";
@@ -16,19 +16,43 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux'
 import { setSearchResult } from '@/redux/reducerSlices/searchResultSlice';
-import { logOutUser } from '@/redux/reducerSlices/userSlice';
+import { logOutUser ,setUserKycVerifiedStatus} from '@/redux/reducerSlices/userSlice';
+import axios from 'axios';
+
 const searchRide = () => {
 
-  const {userDetails} = useSelector(state=>state.user)
+  const {userDetails,kycVerifiedStatus} = useSelector(state=>state.user)
   const router = useRouter();
   const dispatch = useDispatch();
  const email = userDetails.email; 
-  const uName = userDetails.firstName;
+const uName = userDetails.firstName;
+const id = userDetails._id;
 
     const logOut=()=>
       {
         dispatch(logOutUser)
       }
+
+      useEffect(() => {
+        checkKycStatus()
+      }, []);
+    
+      const checkKycStatus = async ()=> {
+        const {data} =await axios.get(`http://localhost:4000/kyc-status/passenger/${id}`)
+       // console.log(data.kycVerifiedStatus)
+         dispatch(setUserKycVerifiedStatus(data.kycVerifiedStatus))
+       }
+
+       const generateKycDiv = ()=>{
+        if(kycVerifiedStatus=== 'unVerified'){
+           return <p className='p-2 bg-orange-100 rounded-lg text-md'> ⚠️ User KYC is not verified. <Link href="/kyc-verify-passenger">Verify Now</Link> </p>
+        }else if(kycVerifiedStatus === 'pending'){
+          return <p className='p-2 bg-orange-100 rounded-lg text-md'> User KYC is submitted. Please wait for Admin Approval </p>
+        }else if(kycVerifiedStatus === 'rejected'){
+          return <p className='p-2 bg-orange-100 rounded-lg text-md'> Your KYC was rejected. <Link href="/kyc-verify-passenger">Re-submit Now</Link> </p>
+        }
+      }
+    
   
   const formik = useFormik({
     initialValues: {
@@ -128,7 +152,8 @@ const searchRide = () => {
          <div>
          <div className='text-blue-600 flex'>
           <div  className='m-2' >
-       {uName}
+          Hi.{uName}
+       {generateKycDiv()}
           </div>
          <Dropdown>
          <DropdownTrigger>
