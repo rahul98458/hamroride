@@ -8,22 +8,24 @@ import { FaCircleArrowDown } from "react-icons/fa6";
 import { FaCircleUser } from "react-icons/fa6";
 import {Input} from "@nextui-org/react";
 import {DatePicker} from "@nextui-org/react";
-import HamroRideLogo from '../../component/logo/page';
+import HamroRideLogo from '../../../component/logo/page';
 import { FaSearch } from 'react-icons/fa';
 import { Formik, useFormik } from 'formik';
 import { useSelector} from 'react-redux';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux'
-import { setSearchResult } from '@/redux/reducerSlices/searchResultSlice';
+import { setBookRideResult, setSearchResult } from '@/redux/reducerSlices/searchResultSlice';
 import { logOutUser ,setUserKycVerifiedStatus} from '@/redux/reducerSlices/userSlice';
 import axios from 'axios';
 
 const searchRide = () => {
 
   const {userDetails,kycVerifiedStatus} = useSelector(state=>state.user)
+  const {bookRideResult} = useSelector(state=>state.searchResult)
   const router = useRouter();
   const dispatch = useDispatch();
+  const [refresh, setRefresh] = useState(false); 
  const email = userDetails.email; 
 const uName = userDetails.firstName;
 const id = userDetails._id;
@@ -36,11 +38,21 @@ const id = userDetails._id;
       useEffect(() => {
         checkKycStatus()
       }, []);
+      useEffect(() => {
+        checkBookRide()
+      },[refresh]);
     
       const checkKycStatus = async ()=> {
-        const {data} =await axios.get(`http://localhost:4000/kyc-status/passenger/${id}`)
+        const {data} =await axios.get(`http://localhost:4000/passenger/kyc-status/${id}`)
        // console.log(data.kycVerifiedStatus)
          dispatch(setUserKycVerifiedStatus(data.kycVerifiedStatus))
+       }
+
+       const removeBookRide = async (pid)=> {
+        const {data} =await axios.get(`http://localhost:4000/passenger/bookride/rem/${pid}`)
+        toast.success(data.msg);
+        setRefresh(prev => !prev);
+       
        }
 
        const generateKycDiv = ()=>{
@@ -52,6 +64,31 @@ const id = userDetails._id;
           return <p className='p-2 bg-orange-100 rounded-lg text-md'> Your KYC was rejected. <Link href="/kyc-verify-passenger">Re-submit Now</Link> </p>
         }
       }
+
+      const checkBookRide = async ()=> {
+        const {data} =await axios.get(`http://localhost:4000/passenger/bookride/${email}`)
+       // console.log(data.myBook);
+         dispatch(setBookRideResult(data.myBook))
+      
+       }
+
+       console.log(bookRideResult)
+
+       const listItems =bookRideResult.map((item) => (
+        <div key={item._id} className='p-2 border-b'>
+          <div><strong>Leaving From:</strong> {item.leavingFrom}
+          <strong className='ml-2'>Going To:</strong> {item.goingTo}
+          <strong  className='ml-2'>Booked Seat:</strong> {item.passengerNum}
+          <strong  className='ml-2'>Date:</strong> {item.date}
+          <strong  className='ml-2'>Price:</strong> {item.price}
+          <strong  className='ml-2'>Ride By:</strong> {item.rideBy}
+          <strong  className='ml-2'>Status:</strong> {item.bookingStatus}
+          <Button onClick={()=>editPublishRide(item._id)} className='ml-2' type='primary'>Edit Ride</Button>
+         <Button onClick={()=>removeBookRide(item._id)} className='ml-2' type='primary'>Delete Ride</Button>
+          
+          </div>
+        </div>
+      ));
     
   
   const formik = useFormik({
@@ -76,7 +113,7 @@ const id = userDetails._id;
       body: JSON.stringify(values)
   };
   
-  const response = await fetch('http://localhost:4000/searchride', requestOptions);
+  const response = await fetch('http://localhost:4000/passenger/searchride', requestOptions);
   const data = await response.json();
   
   // if (response.status === 200) {
@@ -95,7 +132,7 @@ const id = userDetails._id;
     {
     toast.success('Ride found');
     dispatch(setSearchResult(data))
-    router.push('/searchresult');
+    router.push('/passenger/searchresult');
     }
     else
           {
@@ -238,6 +275,10 @@ const id = userDetails._id;
    
    </form>
    </div>
+   <div className='w-[100%] flex flex-col items-center m-4 p-4 '>
+      <div >Your Booked Ride</div>
+      <div >{listItems}</div>
+    </div>
        </div>
      )
 }

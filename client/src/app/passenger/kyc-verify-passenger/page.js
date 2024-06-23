@@ -1,14 +1,18 @@
 'use client'
 import React, { useState } from 'react'
 import Link from 'next/link';
-import {Button, Input} from "@nextui-org/react";
+import { Input} from "@nextui-org/react";
 import CustumNavbar from '@/component/navbar/page';
 import { useFormik} from 'formik';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
+import HamroRideLogo from '../../../component/logo/page';
+import { FaCircleArrowDown } from "react-icons/fa6";
+import { FaCircleUser } from "react-icons/fa6";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
    
-const KycVerifyRider = () => {
+const KycVerifyPassenger = () => {
    
   const {userDetails}=useSelector(state=>state.user);
   const{firstName,lastName,email,address,phone,_id}=userDetails;
@@ -28,20 +32,25 @@ const KycVerifyRider = () => {
         submitKycUser(values);
     }
   });
-      
-  const Rhome=()=>
+
+  const LogOut=()=>
     {
-        router.push('/publishride')
+    dispatch(logOutUser);
     }
+    
+    const Phome=()=>
+        {
+            router.push('/passenger/searchride')
+        }
 
   const  submitKycUser =async(values)=>{
     let formData = new FormData(); 
    
     formData.append('citizenshipNum', values.citizenshipNum);
-    formData.append('licenseNum', values.licenseNum);
+   
     formData.append('userId', _id);
     formData.append('citizenshipPhoto', cimage);
-    formData.append('licensePhoto', limage);
+   
 
     
     const requestOptions = {
@@ -49,7 +58,7 @@ const KycVerifyRider = () => {
       body: formData
     };
 
-  const response = await fetch('http://localhost:4000/rider-kyc', requestOptions);
+  const response = await fetch('http://localhost:4000/passenger/passenger-kyc', requestOptions);
   const data = await response.json();
   if(data.msg){
     toast(data.msg)
@@ -57,11 +66,36 @@ const KycVerifyRider = () => {
 }
        
   const [cimage, setCImage] = useState(null)
-  const [limage, setLImage] = useState(null)
 
   return (
     <div>
-        <CustumNavbar/>
+         <div className=' flex flex-col  m-4'>
+        <div className='flex '>
+        <HamroRideLogo/>
+      
+
+         
+       <div className=' absolute right-20'>
+       <div className='text-blue-600 flex'>
+       <Dropdown>
+         <DropdownTrigger>
+           <Button className='text-blue-600 '>
+            <div className='flex '>
+           <div>  <FaCircleUser className='text-4xl'/></div>
+            <div > <FaCircleArrowDown/></div>
+             </div>
+           </Button>
+         </DropdownTrigger>
+         <DropdownMenu aria-label="Static Actions">
+           <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
+         <DropdownItem key="signup" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/">LogOut</Link></DropdownItem>
+           
+         </DropdownMenu>
+       </Dropdown>
+       </div>
+       </div>
+       </div>
+               <div>
         <form onSubmit={formik.handleSubmit}>
          <div className='flex justify-center items-center  '>
          <div className='w-[45%]  p-8 bg-gray-100 rounded-3xl shadow-2xl p-20 m-5 space-y-7	'>
@@ -176,30 +210,15 @@ const KycVerifyRider = () => {
                 ) : null}
       </div>
 
-      <div>
-    <Input type="text" variant="bordered" label="License Number" 
-     id="licenseNum"
-     name="licenseNum"
-     onChange={formik.handleChange}
-     value={formik.values.licenseNum}
-      />
-       {formik.touched.licenseNum && formik.errors.licenseNum ? (
-                  <div className="text-black text-sm">{formik.errors.licenseNum}</div>
-                ) : null}
-      </div>
-       
+      
        <div>Upload CitizenShip
         <input type='file' className='mt-1' name='citizenshipPhoto'
           onChange={(e)=>setCImage(e.target.files[0])}/>
        </div>
 
-       <div>Upload License
-        <input type='file' className='mt-1' name='licensePhoto'
-         onChange={(e)=>setLImage(e.target.files[0])}/>
-       </div>
 
      <div className='text-blue-600 text-center '>
-      <Button onClick={()=>Rhome()} type='submit' radius="full" className="bg-blue-600 text-white shadow-lg">
+      <Button onClick={()=>Phome()} type='submit' radius="full" className="bg-blue-600 text-white shadow-lg">
       Submit
     </Button>
     <br/><br/>
@@ -207,7 +226,9 @@ const KycVerifyRider = () => {
    </div></div>
    </form>
    </div>
+   </div>
+   </div>
   )
 }
 
-export default KycVerifyRider;
+export default KycVerifyPassenger;

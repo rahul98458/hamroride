@@ -8,7 +8,7 @@ import publishResultSlice from '../reducerSlices/publishResultSlice';
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['searchResult','publishResultSlice']
+    blacklist: ['publishResultSlice']
   }
   const rootReducer = combineReducers({ 
     user: userSlice,

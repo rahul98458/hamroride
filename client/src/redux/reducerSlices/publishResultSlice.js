@@ -10,12 +10,19 @@ const publishResultSlice = createSlice({
   initialState,
   reducers: {
     setPublishResult(state, actions) {
-     
-      return{
-        ...state,
-        publishResultDetails: actions.payload
-      }
+       state.publishResultDetails= actions.payload
+      
     },
+    
+    // removePublishResult(state, actions) {
+    //  const existingPublishRide =[...state.publishResultDetails]
+    //  const removePublishRide = existingPublishRide.filter((item)=>{
+    //        if(item._id!==actions.payload)
+    //         return item
+    //  })
+    //    state.publishResultDetails= removePublishRide;
+    // },
+
   },
 })
 

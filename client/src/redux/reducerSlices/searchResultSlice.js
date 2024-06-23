@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = { 
  
   searchResultDetails: [],
+  bookRideResult:[],
 }
 
 const searchResultSlice = createSlice({
@@ -16,8 +17,11 @@ const searchResultSlice = createSlice({
         searchResultDetails: search
       }
     },
+    setBookRideResult(state, actions) {
+      state.bookRideResult= actions.payload
+   },
   },
 })
 
-export const { setSearchResult } = searchResultSlice.actions
+export const { setSearchResult,setBookRideResult } = searchResultSlice.actions
 export default searchResultSlice.reducer

@@ -13,20 +13,26 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-const { registerUser, loginUser, updateRiderKyc, updatePassengerKyc,checkKycStatusByUserId } = require('../controllers/user');
+const { registerUser, loginUser,registerAdmin,loginAdmin, getUserKyc, updateRiderKyc, updatePassengerKyc,checkKycStatusByUserId } = require('../controllers/user');
 
 router.post('/register',registerUser )
   
 router.post('/login', loginUser)
 
-router.post('/rider-kyc',upload.fields([
+router.post('/rider/rider-kyc',upload.fields([
     { name: "citizenshipPhoto", maxCount: 1 },
     { name: "licensePhoto", maxCount: 1 },]), updateRiderKyc)
 
-router.post('/passenger-kyc', upload.single('citizenshipPhoto'), updatePassengerKyc)
+router.post('/passenger/passenger-kyc', upload.single('citizenshipPhoto'), updatePassengerKyc)
 
- router.get('/kyc-status/rider/:userId', checkKycStatusByUserId)
+ router.get('/rider/kyc-status/:userId', checkKycStatusByUserId)
 
- router.get('/kyc-status/passenger/:userId', checkKycStatusByUserId)
+ router.get('/passenger/kyc-status/:userId', checkKycStatusByUserId)
+
+router.post('/admin/admin-register',registerAdmin )
+  
+router.post('/admin/admin-login', loginAdmin)
+
+router.get('/admin/verify-kyc', getUserKyc)
 
 module.exports=router

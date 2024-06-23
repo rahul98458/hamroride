@@ -8,7 +8,7 @@ import { FaCircleArrowDown } from "react-icons/fa6";
 import { FaCircleUser } from "react-icons/fa6";
 import {Input} from "@nextui-org/react";
 import {DatePicker} from "@nextui-org/react";
-import HamroRideLogo from '../../component/logo/page';
+import HamroRideLogo from '../../../component/logo/page';
 import { FaSearch } from 'react-icons/fa';
 import { Formik, useFormik } from 'formik';
 import { useDispatch, useSelector} from 'react-redux';
@@ -16,13 +16,14 @@ import toast from 'react-hot-toast';
 import { logOutUser, setUserKycVerifiedStatus } from '@/redux/reducerSlices/userSlice';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { setPublishResult } from '@/redux/reducerSlices/publishResultSlice';
-
+import { removePublishResult, setPublishResult } from '@/redux/reducerSlices/publishResultSlice';
 
 const publishride = () => {
   
   const router = useRouter();
   const {userDetails,kycVerifiedStatus} = useSelector(state=>state.user)
+  const {publishResultDetails} = useSelector(state=>state.publishResult)
+  const [refresh, setRefresh] = useState(false); 
   const dispatch = useDispatch();
  const email = userDetails.email; 
  const uName = userDetails.firstName;
@@ -36,27 +37,39 @@ const LogOut=()=>
 
   useEffect(() => {
     checkPublishRide()
-  },[]);
+  },[refresh]);
   
   useEffect(() => {
     checkKycStatus()
   }, []);
 
   const checkKycStatus = async ()=> {
-    const {data} =await axios.get(`http://localhost:4000/kyc-status/rider/${id}`)
+    const {data} =await axios.get(`http://localhost:4000/rider/kyc-status/${id}`)
    // console.log(data.kycVerifiedStatus)
      dispatch(setUserKycVerifiedStatus(data.kycVerifiedStatus))
    }
 
 
   const checkPublishRide = async ()=> {
-   const {data} =await axios.get(`http://localhost:4000/publishride/${email}`)
+   const {data} =await axios.get(`http://localhost:4000/rider/publishride/${email}`)
   // console.log(data.myPublish);
     dispatch(setPublishResult(data.myPublish))
  
   }
 
-  const {publishResultDetails} = useSelector(state=>state.publishResult)
+  const removePublishRide = async (pid)=> {
+    const {data} =await axios.get(`http://localhost:4000/rider/publishride/rem/${pid}`)
+    toast.success(data.msg);
+    setRefresh(prev => !prev);
+   }
+
+  //  const editPublishRide = async (pid)=> {
+  //   const {data} =await axios.post(`http://localhost:4000/rider/publishride/${pid}`)
+  
+  //  }
+
+   
+ 
  // console.log(publishResultDetails)
 
   const listItems = publishResultDetails.map((item) => (
@@ -66,7 +79,8 @@ const LogOut=()=>
       <strong  className='ml-2'>Passenger:</strong> {item.passenger}
       <strong  className='ml-2'>Date:</strong> {item.date.year}/{item.date.month}/{item.date.day}
       <strong  className='ml-2'>Price:</strong> {item.price}
-      <Button className='ml-2' type='primary'>Edit Ride</Button>
+      <Button onClick={()=>editPublishRide(item._id)} className='ml-2' type='primary'>Edit Ride</Button>
+     <Button onClick={()=>removePublishRide(item._id)} className='ml-2' type='primary'>Delete Ride</Button>
       
       </div>
     </div>
@@ -98,16 +112,21 @@ const LogOut=()=>
       body: JSON.stringify(values)
   };
 
-  const response = await fetch('http://localhost:4000/publishride', requestOptions);
+  const response = await fetch('http://localhost:4000/rider/publishride', requestOptions);
   const data = await response.json();
   
   if(response.status==200){
     toast.success(data.msg);
-    router.push('/mypublishride')
+    setRefresh(prev => !prev);
     }
     else
     {toast.error(data.msg);}
   }
+
+
+  
+
+
 
     const handleDateChange = (date) => {
       formik.setFieldValue('date', date);

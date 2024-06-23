@@ -1,11 +1,19 @@
 'use client'
-import { Button } from '@nextui-org/react'
+import { Button, Input } from '@nextui-org/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
-
+import { useRouter } from 'next/navigation';
 
 const searchResult = () => {
+    
+     const router=useRouter()
+     const rideBook =(id) =>{
+      router.push(`/passenger/bookride?id=${id}`)
+     }
+
   
+   
+
     const {searchResultDetails} = useSelector(state=>state.searchResult)
 
     const listItems = searchResultDetails.map((item) => (
@@ -16,7 +24,7 @@ const searchResult = () => {
         <strong  className='ml-2'>Date:</strong> {item.date.year}/{item.date.month}/{item.date.day}
         <strong  className='ml-2'>Ride By:</strong> {item.publishBy}
         <strong  className='ml-2'>Price:</strong> {item.price}
-        <Button className='ml-2' type='primary'>Book Ride</Button>
+        <Button onClick={()=>rideBook(item._id)} className='ml-2' type='primary'>Book Ride</Button>
         </div>
       </div>
     ));
@@ -25,6 +33,7 @@ const searchResult = () => {
     <div>
       <div className='flex flex-col items-center m-4 p-4'>Available Ride</div>
           <div className='flex flex-col items-center m-4 p-4'>{listItems}</div>
+        
     {/* <div>{JSON.stringify(searchResultDetails)}</div> */}
     </div>
   )
