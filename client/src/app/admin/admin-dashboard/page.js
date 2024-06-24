@@ -64,8 +64,11 @@ const AdminDashboard = () => {
           Admin Panel
           </div>
           <br/>
-          <div className='pl-1'>
+          <div className='pl-1 flex-col'>
           <Link href='/admin/verifykyc'>Verify the KYC</Link>
+          </div>
+          <div className='pl-1 flex-col mt-4'>
+          <Link href='/admin/ridedetails'>Booking Ride Details</Link>
           </div>
         </div>
 

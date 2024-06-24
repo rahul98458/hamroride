@@ -68,6 +68,23 @@ const searchRide = async(req, res) => {
       }
 
 
+      const requestedRide = async(req, res) => {
+      //  console.log(req.params)
+      const myRequest = await Book.find({rideBy:req.params.userEmail})
+   // console.log(myRequest);
+      res.json({msg:"Your All Requested Ride",myRequest})
+    
+      }
+
+
+      const rejectRide = async(req, res) => {
+            
+        
+       const rejectStatus =await Book.findByIdAndUpdate(req.params.rideId,{ bookingStatus: 'reject' })
+       console.log(rejectStatus)   
+      
+        }
+
         // const editPublishRide =async(req,res)=>
         //   {
         //     const editPublish = await Ride.findByIdAndUpdate({_id:req.params.rideId})
@@ -76,4 +93,4 @@ const searchRide = async(req, res) => {
 
 
 
-module.exports={publishRide,searchRide,myPublishRide,removePublishRide,bookRide,myBookRide,removeBookRide}
+module.exports={publishRide,searchRide,myPublishRide,removePublishRide,bookRide,myBookRide,removeBookRide,requestedRide,rejectRide}

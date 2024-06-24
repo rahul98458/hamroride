@@ -1,5 +1,6 @@
 const Admin = require('../models/admin');
 const User = require('../models/user');
+const Book = require('../models/book');
 const UserKyc = require('../models/userKyc');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -143,6 +144,15 @@ const registerUser = async(req, res) => {
             )
            }      
 
+
+           
+           const  getBookRideDetails = async (req,res)=>{
+            const bookResult =  await Book.find()
+            res.json(
+              bookResult
+            )
+           }      
+
           
 
-  module.exports={registerUser,loginUser,updateRiderKyc,updatePassengerKyc,checkKycStatusByUserId,loginAdmin,registerAdmin,getUserKyc}
+  module.exports={registerUser,loginUser,updateRiderKyc,updatePassengerKyc,checkKycStatusByUserId,loginAdmin,registerAdmin,getUserKyc,getBookRideDetails}

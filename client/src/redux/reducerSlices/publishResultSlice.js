@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = { 
  
   publishResultDetails: [],
+  bookingRequestedDetails:[]
 }
 
 const publishResultSlice = createSlice({
@@ -11,7 +12,9 @@ const publishResultSlice = createSlice({
   reducers: {
     setPublishResult(state, actions) {
        state.publishResultDetails= actions.payload
-      
+    },
+    setBookingRequestedDetails(state,actions){
+      state.bookingRequestedDetails=actions.payload;
     },
     
     // removePublishResult(state, actions) {
@@ -24,7 +27,9 @@ const publishResultSlice = createSlice({
     // },
 
   },
+
+   
 })
 
-export const {  setPublishResult } = publishResultSlice.actions
+export const {  setPublishResult, setBookingRequestedDetails } = publishResultSlice.actions
 export default publishResultSlice.reducer

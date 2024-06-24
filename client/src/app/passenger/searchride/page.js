@@ -73,22 +73,71 @@ const id = userDetails._id;
        }
 
        console.log(bookRideResult)
+     
 
-       const listItems =bookRideResult.map((item) => (
+       const pendingItems = bookRideResult.filter(item => item.bookingStatus === 'pending');
+       const decisionItems = bookRideResult.filter(item => item.bookingStatus !== 'pending');
+      
+       const pendingListItems = pendingItems.map((item) => (
         <div key={item._id} className='p-2 border-b'>
-          <div><strong>Leaving From:</strong> {item.leavingFrom}
-          <strong className='ml-2'>Going To:</strong> {item.goingTo}
-          <strong  className='ml-2'>Booked Seat:</strong> {item.passengerNum}
-          <strong  className='ml-2'>Date:</strong> {item.date}
-          <strong  className='ml-2'>Price:</strong> {item.price}
-          <strong  className='ml-2'>Ride By:</strong> {item.rideBy}
-          <strong  className='ml-2'>Status:</strong> {item.bookingStatus}
-          <Button onClick={()=>editPublishRide(item._id)} className='ml-2' type='primary'>Edit Ride</Button>
-         <Button onClick={()=>removeBookRide(item._id)} className='ml-2' type='primary'>Delete Ride</Button>
-          
+          <div>
+            <strong>Leaving From:</strong> {item.leavingFrom}
+            <strong className='ml-2'>Going To:</strong> {item.goingTo}
+            <strong className='ml-2'>Booked Seat:</strong> {item.passengerNum}
+            <strong className='ml-2'>Date:</strong> {item.date}
+            <strong className='ml-2'>Price:</strong> {item.price}
+            <strong className='ml-2'>Ride By:</strong> {item.rideBy}
+            <strong className='ml-2'>Status:</strong> {item.bookingStatus}
+            <Button onClick={() => editPublishRide(item._id)} className='ml-2' type='primary'>
+              Edit Ride
+            </Button>
+            <Button onClick={() => removeBookRide(item._id)} className='ml-2' type='primary'>
+              Delete Ride
+            </Button>
           </div>
         </div>
       ));
+      
+      // Map over the otherItems to create the list of items with other statuses
+      const decisionListItems = decisionItems.map((item) => (
+        <div key={item._id} className='p-2 border-b'>
+          <div>
+            <strong>Leaving From:</strong> {item.leavingFrom}
+            <strong className='ml-2'>Going To:</strong> {item.goingTo}
+            <strong className='ml-2'>Booked Seat:</strong> {item.passengerNum}
+            <strong className='ml-2'>Date:</strong> {item.date}
+            <strong className='ml-2'>Price:</strong> {item.price}
+            <strong className='ml-2'>Ride By:</strong> {item.rideBy}
+            <strong className='ml-2'>Status:</strong> {item.bookingStatus}
+          </div>
+        </div>
+      ));
+
+
+      //  const listItems =bookRideResult.map((item) => (
+      //   <div key={item._id} className='p-2 border-b'>
+      //     <div><strong>Leaving From:</strong> {item.leavingFrom}
+      //     <strong className='ml-2'>Going To:</strong> {item.goingTo}
+      //     <strong  className='ml-2'>Booked Seat:</strong> {item.passengerNum}
+      //     <strong  className='ml-2'>Date:</strong> {item.date}
+      //     <strong  className='ml-2'>Price:</strong> {item.price}
+      //     <strong  className='ml-2'>Ride By:</strong> {item.rideBy}
+      //     <strong  className='ml-2'>Status:</strong> {item.bookingStatus}
+
+      //     {item.bookingStatus === 'pending' && (
+      //   <>
+      //     <Button onClick={() => editPublishRide(item._id)} className='ml-2' type='primary'>
+      //       Edit Ride
+      //     </Button>
+      //     <Button onClick={() => removeBookRide(item._id)} className='ml-2' type='primary'>
+      //       Delete Ride
+      //     </Button>
+      //   </>
+      // )}
+         
+      //     </div>
+      //   </div>
+      // ));
     
   
   const formik = useFormik({
@@ -203,7 +252,7 @@ const id = userDetails._id;
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
            <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
-         <DropdownItem key="signup" className='text-blue-600' > <Link onClick={()=>logOut()} href="/">SignOut</Link></DropdownItem>
+         <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>logOut()} href="/">SignOut</Link></DropdownItem>
            
          </DropdownMenu>
        </Dropdown>
@@ -276,8 +325,12 @@ const id = userDetails._id;
    </form>
    </div>
    <div className='w-[100%] flex flex-col items-center m-4 p-4 '>
-      <div >Your Booked Ride</div>
-      <div >{listItems}</div>
+      <div className='text-blue-600 m-2' >Your Pending Booked Ride</div>
+      <div >{pendingListItems}</div>
+    </div>
+    <div className='w-[100%] flex flex-col items-center m-4 p-4 '>
+      <div className='text-blue-600 m-2' >Your Decisioned Booked Ride</div>
+      <div >{decisionListItems}</div>
     </div>
        </div>
      )

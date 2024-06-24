@@ -193,8 +193,9 @@ const LogOut=()=>
            </Button>
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
-           <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
-         <DropdownItem key="signup" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/">LogOut</Link></DropdownItem>
+           <DropdownItem key="profile" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
+           <DropdownItem key="requestedride" className='text-blue-600' ><Link href="/rider/requestedride">Requested Ride</Link></DropdownItem>
+         <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/">LogOut</Link></DropdownItem>
            
          </DropdownMenu>
        </Dropdown>
