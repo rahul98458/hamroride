@@ -7,39 +7,28 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@ne
 import { FaCircleArrowDown } from "react-icons/fa6";
 import HamroRideLogo from '../logo/page';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { logOutUser } from '@/redux/reducerSlices/userSlice';
 
 
 
 
-const CustumNavbar = () => {
+const CustumNavbar2 = () => {
+ 
+  const dispatch = useDispatch()
+    
+  const logOut=()=>
+    {
+      dispatch(logOutUser)
+    }
+
+   
   return (
      <div className=' flex items-center justify-between m-4'>
      <div >
      <HamroRideLogo/>
     </div>
     <div className='flex'>
-    <div className='flex p-2 space-x-4'> 
-    <Link href="/login">
-    <div className='text-blue-600 flex'>
-      <div className='mr-1 mt-1'>
-        <FaSearch className='text-xl' />
-        </div>
-      <div className='mr-1'>Search Ride
-      </div>
-      </div>
-      </Link>
-    
-      <Link href="/login">
-    <div className='text-blue-600 flex'>
-      <div className=' mr-1 mt-1 ml-2 '>
-        <CgAdd className='text-xl' />
-        </div>
-      <div className=''>Publish A Ride
-      </div>
-      </div>
-      </Link>
-      </div>
-     
      
       <div>
       <div className='text-blue-600'>
@@ -53,8 +42,8 @@ const CustumNavbar = () => {
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="login" className='text-blue-600' ><Link href="/login"><div>Login</div></Link></DropdownItem>
-      <DropdownItem key="signup" className='text-blue-600' > <Link href="/register"><div>SignUp</div></Link></DropdownItem>
+        <DropdownItem onClick={()=>logOut()} key="login" className='text-blue-600' ><Link href="/"><div>LogOut</div></Link></DropdownItem>
+     
         
       </DropdownMenu>
     </Dropdown>
@@ -66,4 +55,4 @@ const CustumNavbar = () => {
   )
 }
 
-export default CustumNavbar
+export default CustumNavbar2

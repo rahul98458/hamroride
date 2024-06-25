@@ -246,13 +246,13 @@ const id = userDetails._id;
            <Button className='text-blue-600 '>
             <div className='flex '>
            <div>  <FaCircleUser className='text-4xl'/></div>
-            <div > <FaCircleArrowDown/></div>
+            <div className='mt-3' > <FaCircleArrowDown/></div>
              </div>
            </Button>
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
-           <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
-         <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>logOut()} href="/">SignOut</Link></DropdownItem>
+           <DropdownItem key="login" className='text-blue-600' ><Link href="/login"><div>Profile</div></Link></DropdownItem>
+         <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>logOut()} href="/"><div>LogOut</div></Link></DropdownItem>
            
          </DropdownMenu>
        </Dropdown>

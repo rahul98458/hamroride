@@ -153,6 +153,24 @@ const registerUser = async(req, res) => {
             )
            }      
 
+         
+           const  getRiderDetails = async (req,res)=>{
+            const detailResult =  await User.findOne({email:req.params.riderEmail}, { password: 0 , isKycVerified:0})
+            const allDetailRider = await UserKyc.findOne({userId:detailResult._id},{kycVerifiedStatus: 0 })
+            res.json(
+              {detailResult,allDetailRider}
+            )
+           }      
+
+           const  getPassengerDetails = async (req,res)=>{
+            const detailResult =  await User.findOne({email:req.params.passengerEmail}, { password: 0 , isKycVerified:0})
+            const allDetailPassenger = await UserKyc.findOne({userId:detailResult._id},{kycVerifiedStatus: 0 })
+            res.json(
+              {detailResult,allDetailPassenger}
+            )
+           }      
           
 
-  module.exports={registerUser,loginUser,updateRiderKyc,updatePassengerKyc,checkKycStatusByUserId,loginAdmin,registerAdmin,getUserKyc,getBookRideDetails}
+  module.exports={registerUser,loginUser,updateRiderKyc,updatePassengerKyc,
+    checkKycStatusByUserId,loginAdmin,registerAdmin,
+    getUserKyc,getBookRideDetails,getRiderDetails,getPassengerDetails}

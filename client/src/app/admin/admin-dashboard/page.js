@@ -20,7 +20,12 @@ import { setPublishResult } from '@/redux/reducerSlices/publishResultSlice';
 
 
 const AdminDashboard = () => {
-  
+      
+  const dispatch = useDispatch()
+  const LogOut=()=>
+    {
+      dispatch(logOutUser)
+    }
  
   return (
     <div>
@@ -42,13 +47,13 @@ const AdminDashboard = () => {
            <Button className='text-blue-600 '>
             <div className='flex '>
            <div>  <FaCircleUser className='text-4xl'/></div>
-            <div > <FaCircleArrowDown/></div>
+            <div className='mt-3' > <FaCircleArrowDown/></div>
              </div>
            </Button>
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
-           <DropdownItem key="login" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
-         <DropdownItem key="signup" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/">LogOut</Link></DropdownItem>
+           <DropdownItem key="login" className='text-blue-600' ><Link href="/login"><div>Profile</div></Link></DropdownItem>
+         <DropdownItem key="signup" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/"><div>LogOut</div></Link></DropdownItem>
            
          </DropdownMenu>
        </Dropdown>

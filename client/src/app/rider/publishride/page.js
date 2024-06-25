@@ -188,14 +188,14 @@ const LogOut=()=>
            <Button className='text-blue-600 '>
             <div className='flex '>
            <div>  <FaCircleUser className='text-4xl'/></div>
-            <div > <FaCircleArrowDown/></div>
+            <div className='mt-3' > <FaCircleArrowDown/></div>
              </div>
            </Button>
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
-           <DropdownItem key="profile" className='text-blue-600' ><Link href="/login">Profile</Link></DropdownItem>
-           <DropdownItem key="requestedride" className='text-blue-600' ><Link href="/rider/requestedride">Requested Ride</Link></DropdownItem>
-         <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/">LogOut</Link></DropdownItem>
+           <DropdownItem key="profile" className='text-blue-600' ><Link href="/login"><div>Profile</div></Link></DropdownItem>
+           <DropdownItem key="requestedride" className='text-blue-600' ><Link href="/rider/requestedride"><div>Requested Ride</div></Link></DropdownItem>
+         <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/"><div>LogOut</div></Link></DropdownItem>
            
          </DropdownMenu>
        </Dropdown>

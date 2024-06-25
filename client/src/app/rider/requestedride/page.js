@@ -1,9 +1,11 @@
 'use client'
 import HamroRideLogo from '@/component/logo/page'
+import CustumNavbar2 from '@/component/navbar2/page'
 import { setBookingRequestedDetails } from '@/redux/reducerSlices/publishResultSlice'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import axios from 'axios'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { FaCircleArrowDown, FaCircleUser } from 'react-icons/fa6'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,10 +16,7 @@ const RideRequest = () => {
     const {bookingRequestedDetails} = useSelector(state=>state.publishResult)
    // const [refresh, setRefresh] = useState(false); 
     const dispatch = useDispatch();
-    const LogOut=()=>
-        {
-               dispatch(logOutUser);
-        }
+    const router=useRouter()
 
         useEffect(() => {
           checkRequestedRide()
@@ -38,10 +37,18 @@ const RideRequest = () => {
       console.error('Error rejecting ride:', error);
     }
   }
+
+  const back = ()=>
+    {
+      router.push('/rider/publishride')
+    }
     
+  const passengerDetails =(passengeremail) =>{
+    router.push(`/rider/passengerdetails?email=${passengeremail}`)
+   }
    
        
-         const pendingItems = bookingRequestedDetails.filter(item => item.bookingStatus === 'pending');
+  const pendingItems = bookingRequestedDetails.filter(item => item.bookingStatus === 'pending');
   const otherItems = bookingRequestedDetails.filter(item => item.bookingStatus !== 'pending');
 
 // Map over the pendingItems to create the list of pending items
@@ -57,11 +64,15 @@ const pendingListItems = pendingItems.map((item) => (
       <strong className='ml-2'>Status:</strong> {item.bookingStatus}
       <br/>
       <div>
+      <Button onClick={()=>passengerDetails(item.bookBy)} className='ml-1' type='primary'>View Rider Details</Button>
         <Button onClick={() => acceptRide(item._id)} className='ml-2' type='primary'>
           Accept Ride
         </Button>
         <Button onClick={() => rejectRide(item._id)} className='ml-2' type='primary'>
           Reject Ride
+        </Button>
+        <Button onClick={() =>back()} className='ml-2' type='primary'>
+          Back
         </Button>
       </div>
     </div>
@@ -89,40 +100,9 @@ const otherListItems = otherItems.map((item) => (
 
   return (
     <div>
-
-<div className=' flex items-center justify-between m-4'>
-        <div >
-        <HamroRideLogo/>
-       </div>
-       <div className='flex'>
-
-        
-         <div>
-         <div className='text-blue-600 flex'>
-          <div  className='m-3 mt-0 ' >
-          Hi.{userDetails.firstName}
-          </div>
-         <Dropdown>
-         <DropdownTrigger>
-           <Button className='text-blue-600 '>
-            <div className='flex '>
-           <div>  <FaCircleUser className='text-4xl'/></div>
-            <div > <FaCircleArrowDown/></div>
-             </div>
-           </Button>
-         </DropdownTrigger>
-         <DropdownMenu aria-label="Static Actions">
-          
-           <DropdownItem key="requestedride" className='text-blue-600' ><Link href="/rider/riderequest">Profile</Link></DropdownItem>
-         <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/">LogOut</Link></DropdownItem>
-           
-         </DropdownMenu>
-       </Dropdown>
-         
-         </div>
-         </div>
-       </div>
-       </div>
+        <div className='m-4'>
+            <CustumNavbar2/>
+        </div>
 
        <br/><br/>
       
@@ -130,7 +110,7 @@ const otherListItems = otherItems.map((item) => (
       <div className='text-blue-600 m-2' >Pending Ride Requested To You</div>
       <div >{pendingListItems}</div>
     </div>
-            <br/><br/>
+            <br/>
             
        <div className='w-[100%] flex flex-col items-center m-4 p-4 '>
       <div className='text-blue-600 m-2' >Requested Ride Decision By You.</div>
