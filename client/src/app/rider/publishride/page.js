@@ -17,6 +17,7 @@ import { logOutUser, setUserKycVerifiedStatus } from '@/redux/reducerSlices/user
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { removePublishResult, setPublishResult } from '@/redux/reducerSlices/publishResultSlice';
+import Bottom from '@/component/Buttom/page';
 
 const publishride = () => {
   
@@ -193,7 +194,7 @@ const LogOut=()=>
            </Button>
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
-           <DropdownItem key="profile" className='text-blue-600' ><Link href="/login"><div>Profile</div></Link></DropdownItem>
+           <DropdownItem key="profile" className='text-blue-600' ><Link href="/rider/riderprofile"><div>Profile</div></Link></DropdownItem>
            <DropdownItem key="requestedride" className='text-blue-600' ><Link href="/rider/requestedride"><div>Requested Ride</div></Link></DropdownItem>
          <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>LogOut()} href="/"><div>LogOut</div></Link></DropdownItem>
            
@@ -281,6 +282,10 @@ const LogOut=()=>
    <div className='w-[100%] flex flex-col items-center m-4 p-4 '>
       <div >Your Published Ride</div>
       <div >{listItems}</div>
+    </div>
+    <br/><br/><br/>
+    <div className='flex flex-col'>
+    <Bottom/>
     </div>
        </div>
      )

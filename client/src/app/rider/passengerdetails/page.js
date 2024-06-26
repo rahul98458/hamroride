@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import axios from 'axios'
 import CustumNavbar2 from '@/component/navbar2/page'
 import Link from 'next/link'
+import Bottom from '@/component/Buttom/page'
 
 const PassengerDetails = () => {
       
@@ -28,7 +29,7 @@ const PassengerDetails = () => {
             <CustumNavbar2/>
         </div>
         <div className="flex justify-center items-center ">
-        <h2 className="text-3xl text-blue-600 mb-8">Rider Details</h2>
+        <h2 className="text-3xl text-blue-600 mb-8">Passenger Details</h2>
       </div>
 
      
@@ -53,6 +54,11 @@ const PassengerDetails = () => {
                     <p>Loading Passenger details...</p>
                 </div>
             )}
+
+<br/><br/><br/>
+    <div className='flex flex-col'>
+    <Bottom/>
+    </div>
      </div>
   )
 }

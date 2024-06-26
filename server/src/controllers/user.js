@@ -1,6 +1,7 @@
 const Admin = require('../models/admin');
 const User = require('../models/user');
 const Book = require('../models/book');
+const Ride = require('../models/ride');
 const UserKyc = require('../models/userKyc');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -169,8 +170,18 @@ const registerUser = async(req, res) => {
               {detailResult,allDetailPassenger}
             )
            }      
+
+           const  getRiderProfile = async (req,res)=>{
+            const riderDetail =  await User.findOne({email:req.params.riderEmail}, { password: 0 , isKycVerified:0})
+            const riderAllDetail = await UserKyc.findOne({userId:riderDetail ._id})
+            const riderBooking = await Book.find({rideBy:req.params.riderEmail})
+            const riderPublish = await Ride.find({publishBy:req.params.riderEmail})
+            res.json(
+              {riderDetail, riderAllDetail,riderBooking, riderPublish}
+            )
+           }     
           
 
   module.exports={registerUser,loginUser,updateRiderKyc,updatePassengerKyc,
     checkKycStatusByUserId,loginAdmin,registerAdmin,
-    getUserKyc,getBookRideDetails,getRiderDetails,getPassengerDetails}
+    getUserKyc,getBookRideDetails,getRiderDetails,getPassengerDetails,getRiderProfile}

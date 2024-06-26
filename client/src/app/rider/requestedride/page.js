@@ -1,4 +1,5 @@
 'use client'
+import Bottom from '@/component/Buttom/page'
 import HamroRideLogo from '@/component/logo/page'
 import CustumNavbar2 from '@/component/navbar2/page'
 import { setBookingRequestedDetails } from '@/redux/reducerSlices/publishResultSlice'
@@ -116,7 +117,10 @@ const otherListItems = otherItems.map((item) => (
       <div className='text-blue-600 m-2' >Requested Ride Decision By You.</div>
       <div >{otherListItems}</div>
     </div>
-
+    <br/><br/><br/>
+    <div className='flex flex-col'>
+    <Bottom/>
+    </div>
     </div>
   )
 }
