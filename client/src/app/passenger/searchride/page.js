@@ -198,9 +198,9 @@ const id = userDetails._id;
   //    setPassenger(1)
   //   }
 
-    const handleDateChange = (date) => {
-      formik.setFieldValue('date', date);
-    };
+    // const handleDateChange = (date) => {
+    //   formik.setFieldValue('date', date);
+    // };
 
      // Handlers for passenger buttons
   const handleDecreasePassenger = () => {
@@ -251,7 +251,7 @@ const id = userDetails._id;
            </Button>
          </DropdownTrigger>
          <DropdownMenu aria-label="Static Actions">
-           <DropdownItem key="login" className='text-blue-600' ><Link href="/login"><div>Profile</div></Link></DropdownItem>
+           <DropdownItem key="login" className='text-blue-600' ><Link href="/passenger/passengerprofile"><div>Profile</div></Link></DropdownItem>
          <DropdownItem key="logout" className='text-blue-600' > <Link onClick={()=>logOut()} href="/"><div>LogOut</div></Link></DropdownItem>
            
          </DropdownMenu>

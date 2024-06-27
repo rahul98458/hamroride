@@ -53,7 +53,7 @@ const LogOut=()=>
 
   const checkPublishRide = async ()=> {
    const {data} =await axios.get(`http://localhost:4000/rider/publishride/${email}`)
-  // console.log(data.myPublish);
+   console.log(data.myPublish);
     dispatch(setPublishResult(data.myPublish))
  
   }
@@ -78,6 +78,8 @@ const LogOut=()=>
       <div><strong>Leaving From:</strong> {item.leavingFrom}
       <strong className='ml-2'>Going To:</strong> {item.goingTo}
       <strong  className='ml-2'>Passenger:</strong> {item.passenger}
+      <strong  className='ml-2'>Booked Seat:</strong> {item.bookedSeats}
+      <strong  className='ml-2'>Remaining Seat:</strong> {item.remainingSeats}
       <strong  className='ml-2'>Date:</strong> {item.date.year}/{item.date.month}/{item.date.day}
       <strong  className='ml-2'>Price:</strong> {item.price}
       <Button onClick={()=>editPublishRide(item._id)} className='ml-2' type='primary'>Edit Ride</Button>
@@ -95,15 +97,23 @@ const LogOut=()=>
       goingTo: '',
       date: null,
       passenger:1,
+      bookedSeats:0,
+      remainingSeats:1,
       publishBy:email,
       price:'',
     },
    // validationSchema:validationSchema,
     onSubmit: values => {
-    //  console.log(values)
-      publishRide(values)
+      formik.values.remainingSeats = formik.values.passenger;
+    // console.log(formik.values.remainingSeats)
+    // console.log(values)
+   // formik.setFieldValue('reamainingSeats', formik.values.passenger);
+   formik.setFieldValue('remainingSeats', formik.values.passenger);
+   publishRide(values)
     },
   });
+
+  
         
 
   const publishRide =async(values)=>{
@@ -137,11 +147,13 @@ const LogOut=()=>
   const handleDecreasePassenger = () => {
     if (formik.values.passenger > 1) {
       formik.setFieldValue('passenger', formik.values.passenger - 1);
+      
     }
   };
 
   const handleIncreasePassenger = () => {
     formik.setFieldValue('passenger', formik.values.passenger + 1);
+  
   };
 
   const generateKycDiv = ()=>{
@@ -258,8 +270,12 @@ const LogOut=()=>
    <br/>
    <button className='m-2 bg-blue-400 h-8 w-5' type='button' onClick={handleDecreasePassenger}>-</button> 
     {formik.values.passenger}
+  
     <button className='m-2 bg-blue-400 h-8 w-5'type='button' onClick={handleIncreasePassenger}>+</button>
    </div>
+
+
+   
 
    <div className='m-4'>
       <Input type="text" label="Publish By"  

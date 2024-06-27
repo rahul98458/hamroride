@@ -46,7 +46,7 @@ const PassengerDetails = () => {
                             <p><strong>Gender:</strong> {passengerDetail.detailResult.gender}</p>
                            
                         </div>
-                        <Link href='/rider/publishride'>Back</Link>
+                        <Link href='/rider/requestedride'>Back</Link>
                     </div>
                 </div>
             ) : (

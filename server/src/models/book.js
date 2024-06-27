@@ -7,6 +7,7 @@ const bookSchema = new Schema({
     passengerNum:Number,
     bookBy:String,
     rideBy:String,
+    rideId:String,
     price:Number,
     bookingStatus: {
       type: String,

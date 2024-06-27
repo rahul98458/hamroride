@@ -25,6 +25,7 @@ const BookRide = () => {
     const formik = useFormik({
         initialValues: {
           passengerNum: '',
+          rideId:rideDetail[0]._id,
           leavingFrom:rideDetail[0].leavingFrom,
           goingTo:rideDetail[0].goingTo,
           price:rideDetail[0].price,
@@ -33,7 +34,7 @@ const BookRide = () => {
           date:rideDetail[0].date.year+'/'+rideDetail[0].date.month+'/'+rideDetail[0].date.day,
         },
         onSubmit: values => {
-            if(values.passengerNum<=rideDetail[0].passenger)
+            if(values.passengerNum<=rideDetail[0].remainingSeats)
             //    console.log('ok')
             bookRide(values)
             else
@@ -110,6 +111,13 @@ const BookRide = () => {
         name="rideBy"
         onChange={formik.handleChange}
         value={formik.values.rideBy}  
+        /></div>
+
+<div className='m-4 w-50 ml-18'>  <Input type="text" label="Book By?"  isRequired
+        id="rideId"
+        name="rideId"
+        onChange={formik.handleChange}
+        value={formik.values.rideId}  
         /></div>
 
 <div className='m-4 w-50 ml-18'>  <Input type="text" label="Date"  isRequired

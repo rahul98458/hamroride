@@ -8,6 +8,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { FaCircleArrowDown, FaCircleUser } from 'react-icons/fa6'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -21,7 +22,7 @@ const RideRequest = () => {
 
         useEffect(() => {
           checkRequestedRide()
-        });
+        },[]);
 
     const checkRequestedRide = async ()=> {
       const {data} =await axios.get(`http://localhost:4000/rider/requestedride/${userDetails.email}`)
@@ -37,6 +38,15 @@ const RideRequest = () => {
     } catch (error) {
       console.error('Error rejecting ride:', error);
     }
+  }
+
+  const acceptRide = async (id,itid,pNum) => {
+    const {data} = await axios.patch(`http://localhost:4000/rider/acceptride/${id}`,{
+      passengerNum: pNum,
+      itemId: itid });
+      // toast.success(data.msg);
+      // router.push('/rider/publishride')
+  //  alert(`Ride ID: ${id}, Passenger Number: ${pNum}`);
   }
 
   const back = ()=>
@@ -65,8 +75,8 @@ const pendingListItems = pendingItems.map((item) => (
       <strong className='ml-2'>Status:</strong> {item.bookingStatus}
       <br/>
       <div>
-      <Button onClick={()=>passengerDetails(item.bookBy)} className='ml-1' type='primary'>View Rider Details</Button>
-        <Button onClick={() => acceptRide(item._id)} className='ml-2' type='primary'>
+      <Button onClick={()=>passengerDetails(item.bookBy)} className='ml-1' type='primary'>View Passenger Details</Button>
+        <Button onClick={() => acceptRide(item.rideId,item._id,item.passengerNum)} className='ml-2' type='primary'>
           Accept Ride
         </Button>
         <Button onClick={() => rejectRide(item._id)} className='ml-2' type='primary'>
@@ -113,10 +123,13 @@ const otherListItems = otherItems.map((item) => (
     </div>
             <br/>
             
+            
        <div className='w-[100%] flex flex-col items-center m-4 p-4 '>
       <div className='text-blue-600 m-2' >Requested Ride Decision By You.</div>
       <div >{otherListItems}</div>
     </div>
+     
+    <Button onClick={()=>back()}>Back</Button>
     <br/><br/><br/>
     <div className='flex flex-col'>
     <Bottom/>

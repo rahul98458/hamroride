@@ -19,7 +19,7 @@ const searchRide = async(req, res) => {
           $and: [
             { leavingFrom: req.body.leavingFrom },
             { goingTo: req.body.goingTo },
-            { passenger: { $gte: req.body.passenger } }
+            { remainingSeats: { $gte: req.body.passenger } }
           ]
         });  
         
@@ -44,7 +44,9 @@ const searchRide = async(req, res) => {
 
       const removePublishRide = async(req, res) => {
       
-        const remPublish = await Ride.findByIdAndDelete({_id:req.params.rideId})
+       // console.log(req.params.rideId)
+         const remPublish = await Ride.findByIdAndDelete({_id:req.params.rideId})
+          const remBook  = await  Book.findOneAndDelete({rideId:req.params.rideId})
     
         res.json({msg:"Your Ride Deleted"})
       
@@ -57,6 +59,19 @@ const searchRide = async(req, res) => {
           res.json({msg:"Your Ride Deleted"})
         
           }
+
+          const acceptRide = async(req, res) => {
+              const { rideId } = req.params;
+             const { passengerNum } = req.body; 
+             const{itemId}=req.body; 
+           //  console.log(rideId,passengerNum,itemId)
+             const currentRide = await Ride.findById(rideId);
+              const remainingSeats = currentRide.remainingSeats - passengerNum;
+              const bookingSeats = currentRide.bookedSeats + passengerNum;
+            const updateStatus =await Book.findOneAndUpdate({_id:itemId},{ bookingStatus: 'accept' })
+             const updateSeat =await Ride.findByIdAndUpdate(rideId,{bookedSeats: bookingSeats,remainingSeats:remainingSeats})
+            // res.json({msg:"Your Ride Accepted"})
+            }
 
        
       const myBookRide = async(req, res) => {
@@ -93,4 +108,6 @@ const searchRide = async(req, res) => {
 
 
 
-module.exports={publishRide,searchRide,myPublishRide,removePublishRide,bookRide,myBookRide,removeBookRide,requestedRide,rejectRide}
+module.exports={publishRide,searchRide,myPublishRide,
+  removePublishRide,bookRide,myBookRide,acceptRide,
+  removeBookRide,requestedRide,rejectRide}

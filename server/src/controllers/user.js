@@ -181,7 +181,15 @@ const registerUser = async(req, res) => {
             )
            }     
           
+           const getPassengerProfile = async (req,res)=>{
+            const detailResult =  await User.findOne({email:req.params.passengerEmail}, { password: 0 , isKycVerified:0})
+            const allDetailPassenger = await UserKyc.findOne({userId:detailResult._id})
+            const passengerBooking = await Book.find({bookBy:req.params.passengerEmail})
+            res.json(
+              {detailResult,allDetailPassenger,passengerBooking}
+            )
+           }     
 
   module.exports={registerUser,loginUser,updateRiderKyc,updatePassengerKyc,
     checkKycStatusByUserId,loginAdmin,registerAdmin,
-    getUserKyc,getBookRideDetails,getRiderDetails,getPassengerDetails,getRiderProfile}
+    getUserKyc,getBookRideDetails,getRiderDetails,getPassengerDetails,getRiderProfile,getPassengerProfile}

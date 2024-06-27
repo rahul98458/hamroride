@@ -26,7 +26,7 @@ const searchResult = () => {
       <div key={item._id} className='p-2 border-b'>
         <div><strong>Leaving From:</strong> {item.leavingFrom}
         <strong className='ml-2'>Going To:</strong> {item.goingTo}
-        <strong  className='ml-2'>Passenger:</strong> {item.passenger}
+        <strong  className='ml-2'>Seats:</strong> {item.remainingSeats}
         <strong  className='ml-2'>Date:</strong> {item.date.year}/{item.date.month}/{item.date.day}
         <strong  className='ml-2'>Ride By:</strong> {item.publishBy}
         <strong  className='ml-2'>Price:</strong> {item.price}

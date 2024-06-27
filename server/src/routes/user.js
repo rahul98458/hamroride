@@ -15,7 +15,7 @@ const upload = multer({ storage: storage })
 
 const { registerUser, loginUser,registerAdmin,loginAdmin, getUserKyc,
   updateRiderKyc, updatePassengerKyc,checkKycStatusByUserId,
-  getBookRideDetails,getRiderDetails,getPassengerDetails ,getRiderProfile} = require('../controllers/user');
+  getBookRideDetails,getRiderDetails,getPassengerDetails ,getRiderProfile, getPassengerProfile} = require('../controllers/user');
 
 router.post('/register',registerUser )
   
@@ -44,5 +44,7 @@ router.get('/passenger/riderdetail/:riderEmail', getRiderDetails)
 router.get('/rider/passengerdetail/:passengerEmail', getPassengerDetails)
 
 router.get('/rider/riderprofile/:riderEmail', getRiderProfile)
+
+router.get('/passenger/passengerprofile/:passengerEmail', getPassengerProfile)
 
 module.exports=router

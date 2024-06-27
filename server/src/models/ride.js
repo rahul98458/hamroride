@@ -5,6 +5,8 @@ const rideSchema = new Schema({
     goingTo : String, 
     date:Object,
     passenger:Number,
+    bookedSeats:Number,
+    remainingSeats:Number,
     publishBy:String,
     price:Number,
   });
